@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var StorageManager = require('bateeq-module').inventory.StorageManager;
+var StorageManager = require('bateeq-module').master.StorageManager;
 var InventoryManager = require('bateeq-module').inventory.InventoryManager;
 var InventoryMovementManager = require('bateeq-module').inventory.InventoryMovementManager;
 var db = require('../../../db');
@@ -19,7 +19,9 @@ router.get('/:storageId/inventories', (request, response, next) => {
 
         manager.readByStorageId(storageId,query)
             .then(docs => { 
-                var result = resultFormatter.ok(apiVersion, 200, docs);
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
+                delete docs.data;
+                result.info = docs;
                 response.send(200, result);
             })
             .catch(e => {
@@ -30,16 +32,16 @@ router.get('/:storageId/inventories', (request, response, next) => {
     })
 });
 
-router.get('/:storageId/inventories/:articleVariantId', (request, response, next) => {
+router.get('/:storageId/inventories/:itemId', (request, response, next) => {
     db.get().then(db => {
         var manager = new InventoryManager(db, {
             username: 'router'
         });
         
         var storageId = request.params.storageId;
-        var articleVariantId = request.params.articleVariantId;
+        var itemId = request.params.itemId;
 
-        manager.getByStorageIdAndArticleVarianId(storageId, articleVariantId)
+        manager.getByStorageIdAndItemId(storageId, itemId)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
                 response.send(200, result); 

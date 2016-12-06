@@ -17,7 +17,7 @@ router.get('/efr-tb-bbt/pending', (request, response, next) => {
 
         manager.readPendingSPK(query)
             .then(docs => { 
-                var result = resultFormatter.ok(apiVersion, 200, docs);
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 response.send(200, result);
             })
             .catch(e => {
@@ -38,7 +38,7 @@ router.get('/efr-tb-bat/pending', (request, response, next) => {
 
         manager.readPendingSPK(query)
             .then(docs => { 
-                var result = resultFormatter.ok(apiVersion, 200, docs);
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 response.send(200, result);
             })
             .catch(e => {

@@ -16,7 +16,7 @@ router.get('/:module/draft/:id', (request, response, next) => {
         
         var id = request.params.id;
 
-        manager.getById(id)
+        manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
                 response.send(200, result); 
@@ -40,7 +40,7 @@ router.get('/:module/submitted/:id', (request, response, next) => {
         
         var id = request.params.id;
 
-        manager.getById(id)
+        manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
                 response.send(200, result); 
