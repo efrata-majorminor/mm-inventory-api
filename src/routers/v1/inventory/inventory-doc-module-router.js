@@ -19,7 +19,9 @@ router.get('/:module', (request, response, next) => {
 
         manager.read(query)
             .then(docs => { 
-                var result = resultFormatter.ok(apiVersion, 200, docs);
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
+                delete docs.data;
+                result.info = docs;
                 response.send(200, result);
             })
             .catch(e => {
@@ -41,7 +43,7 @@ router.get('/:module/:id', (request, response, next) => {
         
         var id = request.params.id;
 
-        manager.getById(id)
+        manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
                 response.send(200, result); 
