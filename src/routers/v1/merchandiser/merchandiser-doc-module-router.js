@@ -6,57 +6,57 @@ var resultFormatter = require("../../../result-formatter");
 
 const apiVersion = '1.0.0';
 router.get('/:module/draft/:id', (request, response, next) => {
-    db.get().then(db => { 
+    db.get().then(db => {
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-        
+
         var id = request.params.id;
 
         manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
-                response.send(200, result); 
+                response.send(200, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            }) 
+            })
     })
 });
 
 router.get('/:module/submitted/:id', (request, response, next) => {
-    db.get().then(db => { 
+    db.get().then(db => {
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-        
-        var id = request.params.id; 
+
+        var id = request.params.id;
         manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
-                response.send(200, result); 
+                response.send(200, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            }) 
+            })
     })
 });
 
 router.post('/:module/draft', (request, response, next) => {
-    db.get().then(db => { 
+    db.get().then(db => {
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-        
-        var data = request.body; 
+
+        var data = request.body;
         manager.createDraft(data)
             .then(docId => {
                 response.header('Location', `merchandisers/docs/${module}/draft/${docId.toString()}`);
@@ -66,18 +66,18 @@ router.post('/:module/draft', (request, response, next) => {
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            }) 
+            })
     })
-}); 
+});
 
 router.del('/:module/draft/:id', (request, response, next) => {
-    db.get().then(db => { 
+    db.get().then(db => {
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-         
+
         var id = request.params.id;
         var data = request.body;
 
@@ -94,13 +94,13 @@ router.del('/:module/draft/:id', (request, response, next) => {
 });
 
 router.get('/:module', (request, response, next) => {
-    db.get().then(db => { 
+    db.get().then(db => {
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-        
+
         var query = request.queryInfo;
         var sorting = {
             "_createdDate": -1
@@ -108,25 +108,27 @@ router.get('/:module', (request, response, next) => {
         query.order = sorting;
 
         manager.read(query)
-            .then(docs => { 
-                var result = resultFormatter.ok(apiVersion, 200, docs);
+            .then(docs => {
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
+                delete docs.data;
+                result.info = docs;
                 response.send(200, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            }) 
+            })
     })
 });
 
 router.post('/:module/submitted', (request, response, next) => {
-    db.get().then(db => { 
+    db.get().then(db => {
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-        
+
         var data = request.body;
 
         manager.create(data)
@@ -138,18 +140,18 @@ router.post('/:module/submitted', (request, response, next) => {
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            }) 
+            })
     })
 });
 
 router.put('/:module/submitted/:id', (request, response, next) => {
-    db.get().then(db => { 
+    db.get().then(db => {
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
-        }); 
-        
+        });
+
         var id = request.params.id;
         var data = request.body;
 
@@ -167,13 +169,13 @@ router.put('/:module/submitted/:id', (request, response, next) => {
 });
 
 router.put('/:module/draft/:id', (request, response, next) => {
-    db.get().then(db => { 
+    db.get().then(db => {
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
-        }); 
-        
+        });
+
         var id = request.params.id;
         var data = request.body;
 
@@ -188,6 +190,6 @@ router.put('/:module/draft/:id', (request, response, next) => {
             })
 
     })
-}); 
- 
+});
+
 module.exports = router;
