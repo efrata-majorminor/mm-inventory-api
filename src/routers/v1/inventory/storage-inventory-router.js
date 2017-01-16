@@ -16,7 +16,9 @@ router.get('/:storageId/inventories', (request, response, next) => {
         
         var storageId = request.params.storageId;
         var query = request.query;
-
+        query.select = [
+            "item.code", "item.name", "quantity"
+        ];
         manager.readByStorageId(storageId,query)
             .then(docs => { 
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);

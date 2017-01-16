@@ -106,6 +106,9 @@ router.get('/:module', (request, response, next) => {
             "_createdDate": -1
         };
         query.order = sorting;
+        query.select = [
+            "packingList","password", "source.name", "destination.name", "date", "isDraft"
+        ];
 
         manager.read(query)
             .then(docs => {
