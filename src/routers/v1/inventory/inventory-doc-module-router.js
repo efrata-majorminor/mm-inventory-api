@@ -16,6 +16,9 @@ router.get('/:module', (request, response, next) => {
         });
         
         var query = request.query;
+        query.select = [
+            "code", "reference", "source.name", "destination.name", "_createdDate"
+        ];
 
         manager.read(query)
             .then(docs => { 
