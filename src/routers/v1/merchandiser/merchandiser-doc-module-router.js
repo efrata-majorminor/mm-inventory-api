@@ -105,9 +105,13 @@ router.get('/:module', (request, response, next) => {
         var sorting = {
             "_createdDate": -1
         };
+        var filter = {
+            "isReceived": false
+        };
+        query.filter = filter;
         query.order = sorting;
         query.select = [
-            "packingList","password", "source.name", "destination.name", "date", "isDraft"
+            "packingList", "password", "source.code", "source.name", "destination.code", "destination.name", "date", "isReceived"
         ];
 
         manager.read(query)
