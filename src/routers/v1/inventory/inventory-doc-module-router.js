@@ -8,20 +8,52 @@ const apiVersion = '1.0.0';
 
 router.get('/:module', (request, response, next) => {
     db.get().then(db => {
-        
+
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-        
+        var filter;
         var query = request.query;
+        if (module === "efr-tb-bbt") {
+            var moduleId="EFR-TB/BBT";
+            filter = { 
+                "code": {
+                    '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
+                } 
+            };
+        } 
+
+        if (module === "efr-tb-bat") {
+            var moduleId="EFR-TB/BAT";
+            filter = { 
+                "code": {
+                    '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
+                } 
+            };
+        }
+
+         if (module === "efr-kb-rtp") {
+            var moduleId="EFR-KB/RTP"; 
+            var regexModuleId = new RegExp(moduleId, "i");
+            filter = { 
+                "code": {
+                    '$regex': regexModuleId
+                } 
+            };
+        } 
+
+        query.filter = filter;
+        query.order = {
+            "_createdDate": -1
+        };
         query.select = [
-            "code", "reference", "source.name", "destination.name", "_createdDate"
+            "code", "reference", "source.name","source.code","destination.code", "destination.name", "_createdDate", "_createdBy"
         ];
 
         manager.read(query)
-            .then(docs => { 
+            .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
                 result.info = docs;
@@ -37,19 +69,19 @@ router.get('/:module', (request, response, next) => {
 
 router.get('/:module/:id', (request, response, next) => {
     db.get().then(db => {
-        
+
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-        
+
         var id = request.params.id;
 
         manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
-                response.send(200, result); 
+                response.send(200, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
@@ -61,13 +93,13 @@ router.get('/:module/:id', (request, response, next) => {
 
 router.post('/:module', (request, response, next) => {
     db.get().then(db => {
-        
+
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-        
+
         var data = request.body;
 
         manager.create(data)
@@ -86,13 +118,13 @@ router.post('/:module', (request, response, next) => {
 
 router.put('/:module/:id', (request, response, next) => {
     db.get().then(db => {
-        
+
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
-        }); 
-        
+        });
+
         var id = request.params.id;
         var data = request.body;
 
@@ -111,13 +143,13 @@ router.put('/:module/:id', (request, response, next) => {
 
 router.del('/:module/:id', (request, response, next) => {
     db.get().then(db => {
-        
+
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, {
             username: 'router'
         });
-         
+
         var id = request.params.id;
         var data = request.body;
 
