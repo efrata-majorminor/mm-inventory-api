@@ -4,15 +4,13 @@ var map = require('bateeq-module').inventory.map;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var ObjectId = require("mongodb").ObjectId;
-
+var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
       
-router.get('/:id/exportall', (request, response, next) => {
+router.get('/:id/exportall',passport, (request, response, next) => {
     db.get().then(db => {
         var Manager = map.get("efr-kb-rtp");
-        var manager = new Manager(db, {
-            username: 'router'
-        }); 
+        var manager = new Manager(db, request.user);
         
         var id = request.params.id; 
          
