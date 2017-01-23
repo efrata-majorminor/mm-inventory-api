@@ -3,15 +3,13 @@ var router = new Router();
 var map = require('bateeq-module').inventory.map;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
-
+var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
 
-router.get('/efr-tb-bbt/pending', (request, response, next) => {
+router.get('/efr-tb-bbt/pending',passport, (request, response, next) => {
     db.get().then(db => {
        var Manager = map.get("efr-tb-bbt");
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
         
         var query = request.query;
 
@@ -28,12 +26,10 @@ router.get('/efr-tb-bbt/pending', (request, response, next) => {
     })
 });
 
-router.get('/efr-tb-bat/pending', (request, response, next) => {
+router.get('/efr-tb-bat/pending',passport, (request, response, next) => {
     db.get().then(db => {
        var Manager = map.get("efr-tb-bat");
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
         var query = request.query;
 
         manager.readPendingSPK(query)
@@ -51,12 +47,10 @@ router.get('/efr-tb-bat/pending', (request, response, next) => {
 
 
 
-router.get('/efr-tb-bbt/pending/:id', (request, response, next) => {
+router.get('/efr-tb-bbt/pending/:id',passport, (request, response, next) => {
     db.get().then(db => {
        var Manager = map.get("efr-tb-bbt");
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
         var id = request.params.id;
 
         manager.getPendingSPKById(id)
@@ -72,12 +66,10 @@ router.get('/efr-tb-bbt/pending/:id', (request, response, next) => {
     })
 });
 
-router.get('/efr-tb-bat/pending/:id', (request, response, next) => {
+router.get('/efr-tb-bat/pending/:id',passport, (request, response, next) => {
     db.get().then(db => {
        var Manager = map.get("efr-tb-bat");
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
         var id = request.params.id;
 
         manager.getPendingSPKById(id)

@@ -5,14 +5,12 @@ var InventoryManager = require('bateeq-module').inventory.InventoryManager;
 var InventoryMovementManager = require('bateeq-module').inventory.InventoryMovementManager;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
-
+var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
 
-router.get('/:storageId/inventories/:itemId/movements', (request, response, next) => {
+router.get('/:storageId/inventories/:itemId/movements',passport, (request, response, next) => {
     db.get().then(db => {
-        var manager = new InventoryMovementManager(db, {
-            username: 'router'
-        });
+        var manager = new InventoryMovementManager(db, request.user);
 
         var storageId = request.params.storageId;
         var itemId = request.params.itemId;
@@ -33,11 +31,9 @@ router.get('/:storageId/inventories/:itemId/movements', (request, response, next
     })
 });
 
-router.get('/:storageId/inventories/:itemId/movements/:id', (request, response, next) => {
+router.get('/:storageId/inventories/:itemId/movements/:id',passport, (request, response, next) => {
     db.get().then(db => {
-        var manager = new InventoryMovementManager(db, {
-            username: 'router'
-        });
+        var manager = new InventoryMovementManager(db, request.user);
 
         var storageId = request.params.storageId;
         var itemId = request.params.itemId;
