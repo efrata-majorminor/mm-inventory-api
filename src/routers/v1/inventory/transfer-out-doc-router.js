@@ -3,14 +3,12 @@ var router = new Router();
 var TransferOutDocManager = require('bateeq-module').inventory.TransferOutDocManager;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
-
+var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
 
-router.get('/', (request, response, next) => {
+router.get('/',  passport, (request, response, next) => {
     db.get().then(db => {
-        var manager = new TransferOutDocManager(db, {
-            username: 'router'
-        });
+        var manager = new TransferOutDocManager(db, request.user);
         
         var query = request.query;
 
@@ -29,11 +27,9 @@ router.get('/', (request, response, next) => {
     })
 });
 
-router.get('/:id', (request, response, next) => {
+router.get('/:id', passport, (request, response, next) => {
     db.get().then(db => {
-        var manager = new TransferOutDocManager(db, {
-            username: 'router'
-        });
+        var manager = new TransferOutDocManager(db, request.user);
         
         var id = request.params.id;
 
@@ -50,11 +46,9 @@ router.get('/:id', (request, response, next) => {
     })
 });
 
-router.post('/', (request, response, next) => {
+router.post('/',  passport, (request, response, next) => {
     db.get().then(db => {
-        var manager = new TransferOutDocManager(db, {
-            username: 'router'
-        });
+        var manager = new TransferOutDocManager(db, request.user);
         
         var data = request.body;
 
@@ -72,11 +66,9 @@ router.post('/', (request, response, next) => {
     })
 });
 
-router.put('/:id', (request, response, next) => {
+router.put('/:id',  passport, (request, response, next) => {
     db.get().then(db => {
-        var manager = new TransferOutDocManager(db, {
-            username: 'router'
-        });
+        var manager = new TransferOutDocManager(db, request.user);
         
         var id = request.params.id;
         var data = request.body;
@@ -94,11 +86,9 @@ router.put('/:id', (request, response, next) => {
     })
 });
 
-router.del('/:id', (request, response, next) => {
+router.del('/:id',  passport, (request, response, next) => {
     db.get().then(db => {
-        var manager = new TransferOutDocManager(db, {
-            username: 'router'
-        });
+        var manager = new TransferOutDocManager(db, request.user);
         
         var id = request.params.id;
         var data = request.body;

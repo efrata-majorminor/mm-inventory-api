@@ -3,7 +3,7 @@ var router = new Router();
 var map = require('bateeq-module').inventory.map;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
-
+var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
 
 router.get('/:module', (request, response, next) => {
@@ -91,14 +91,12 @@ router.get('/:module/:id', (request, response, next) => {
     })
 });
 
-router.post('/:module', (request, response, next) => {
+router.post('/:module', passport, (request, response, next) => {
     db.get().then(db => {
 
         var module = request.params.module;
         var Manager = map.get(module);
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
 
         var data = request.body;
 
@@ -116,14 +114,12 @@ router.post('/:module', (request, response, next) => {
     })
 });
 
-router.put('/:module/:id', (request, response, next) => {
+router.put('/:module/:id', passport,(request, response, next) => {
     db.get().then(db => {
 
         var module = request.params.module;
         var Manager = map.get(module);
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
 
         var id = request.params.id;
         var data = request.body;
@@ -141,14 +137,12 @@ router.put('/:module/:id', (request, response, next) => {
     })
 });
 
-router.del('/:module/:id', (request, response, next) => {
+router.del('/:module/:id', passport, (request, response, next) => {
     db.get().then(db => {
 
         var module = request.params.module;
         var Manager = map.get(module);
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
 
         var id = request.params.id;
         var data = request.body;

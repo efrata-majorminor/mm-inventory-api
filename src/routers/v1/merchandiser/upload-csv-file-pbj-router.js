@@ -3,12 +3,12 @@ var router = new Router();
 var map = require('bateeq-module').merchandiser.map;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
-
+var passport = require('../../../passports/jwt-passport');
 var fs = require('fs');
 var csv = require('fast-csv');
 
 const apiVersion = '1.0.0';
-router.post('/', (request, response, next) => {
+router.post('/',passport,(request, response, next) => {
     var dateFormat = "DD MMM YYYY";
     var locale = 'id-ID';
     var moment = require('moment');
@@ -19,9 +19,7 @@ router.post('/', (request, response, next) => {
         var dataAll;
         var module = "efr-pk-pbj";
         var Manager = map.get(module);
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
 
         fs.createReadStream(request.files.fileUpload.path)
             .pipe(csv())
