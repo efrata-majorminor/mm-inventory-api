@@ -6,15 +6,22 @@ var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
 
-router.get('/efr-tb-bbt/pending',passport, (request, response, next) => {
+router.get('/efr-tb-bbt/pending', passport, (request, response, next) => {
     db.get().then(db => {
-       var Manager = map.get("efr-tb-bbt");
+        var Manager = map.get("efr-tb-bbt");
         var manager = new Manager(db, request.user);
-        
+        var stores = [];
+        for (var i = 0; i < request.user.stores.length; i++) {
+            stores.push(request.user.stores[i].code);
+        }
+
         var query = request.query;
+        if (stores.length > 0) {
+            query.filter = stores;
+        }
 
         manager.readPendingSPK(query)
-            .then(docs => { 
+            .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
                 result.info = docs;
@@ -28,14 +35,14 @@ router.get('/efr-tb-bbt/pending',passport, (request, response, next) => {
     })
 });
 
-router.get('/efr-tb-bat/pending',passport, (request, response, next) => {
+router.get('/efr-tb-bat/pending', passport, (request, response, next) => {
     db.get().then(db => {
-       var Manager = map.get("efr-tb-bat");
+        var Manager = map.get("efr-tb-bat");
         var manager = new Manager(db, request.user);
         var query = request.query;
 
         manager.readPendingSPK(query)
-            .then(docs => { 
+            .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 response.send(200, result);
             })
@@ -49,14 +56,14 @@ router.get('/efr-tb-bat/pending',passport, (request, response, next) => {
 
 
 
-router.get('/efr-tb-bbt/pending/:id',passport, (request, response, next) => {
+router.get('/efr-tb-bbt/pending/:id', passport, (request, response, next) => {
     db.get().then(db => {
-       var Manager = map.get("efr-tb-bbt");
+        var Manager = map.get("efr-tb-bbt");
         var manager = new Manager(db, request.user);
         var id = request.params.id;
 
         manager.getPendingSPKById(id)
-            .then(docs => { 
+            .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs);
                 response.send(200, result);
             })
@@ -68,14 +75,14 @@ router.get('/efr-tb-bbt/pending/:id',passport, (request, response, next) => {
     })
 });
 
-router.get('/efr-tb-bat/pending/:id',passport, (request, response, next) => {
+router.get('/efr-tb-bat/pending/:id', passport, (request, response, next) => {
     db.get().then(db => {
-       var Manager = map.get("efr-tb-bat");
+        var Manager = map.get("efr-tb-bat");
         var manager = new Manager(db, request.user);
         var id = request.params.id;
 
         manager.getPendingSPKById(id)
-            .then(docs => { 
+            .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs);
                 response.send(200, result);
             })
