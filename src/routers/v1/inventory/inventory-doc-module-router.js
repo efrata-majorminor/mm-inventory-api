@@ -6,21 +6,28 @@ var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
 
-router.get('/:module', (request, response, next) => {
+router.get('/:module', passport,(request, response, next) => {
     db.get().then(db => {
 
         var module = request.params.module;
         var Manager = map.get(module);
-        var manager = new Manager(db, {
-            username: 'router'
-        });
+        var manager = new Manager(db, request.user);
         var filter;
+        var stores=[]; 
+        for (var i=0; i<request.user.stores.length; i++)
+        {
+            stores.push(request.user.stores[i].code);
+        }
         var query = request.query;
         if (module === "efr-tb-bbt") {
             var moduleId="EFR-TB/BBT";
             filter = { 
                 "code": {
                     '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
+                },
+                "destination.code":
+                {
+                    $in: stores
                 } 
             };
         } 
@@ -30,6 +37,10 @@ router.get('/:module', (request, response, next) => {
             filter = { 
                 "code": {
                     '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
+                },
+                "destination.code":
+                {
+                    $in: stores
                 } 
             };
         }
@@ -40,6 +51,10 @@ router.get('/:module', (request, response, next) => {
             filter = { 
                 "code": {
                     '$regex': regexModuleId
+                },
+                "source.code":
+                {
+                    $in: stores
                 } 
             };
         } 
