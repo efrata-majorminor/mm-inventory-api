@@ -8,7 +8,7 @@ var fs = require('fs');
 var csv = require('fast-csv');
 
 const apiVersion = '1.0.0';
-router.post('/',passport,(request, response, next) => {
+router.post('/', passport, (request, response, next) => {
     var dateFormat = "DD MMM YYYY";
     var locale = 'id-ID';
     var moment = require('moment');
@@ -28,10 +28,10 @@ router.post('/',passport,(request, response, next) => {
             })
             .on('end', function (data) {
                 dataAll = dataCsv;
-                if (dataAll[0][0] === "PackingList" && dataAll[0][1] === "Password" && dataAll[0][2] === "Barcode" && dataAll[0][3] === "Name" && dataAll[0][4] === "Size" && dataAll[0][5] === "Price" && dataAll[0][6] === "UOM" && dataAll[0][7] === "QTY" && dataAll[0][8] === "RO") {
+                if (dataAll[0][0] === "PackingList" && dataAll[0][1] === "Password" && dataAll[0][2] === "Barcode" && dataAll[0][3] === "Name" && dataAll[0][4] === "Size" && dataAll[0][5] === "Price" && dataAll[0][6] === "UOM" && dataAll[0][7] === "QTY" && dataAll[0][8] === "RO" && dataAll[0][9] === "HPP") {
                     manager.insert(dataAll, request.params.sourceId, request.params.destinationId, request.params.date)
                         .then(doc => {
-                           if (doc[0]["Error"] === undefined) {
+                            if (doc[0]["Error"] === undefined) {
                                 var result = resultFormatter.ok(apiVersion, 201, doc);
                                 response.send(201, result);
                             }
@@ -46,9 +46,10 @@ router.post('/',passport,(request, response, next) => {
                                     "UOM": "string",
                                     "QTY": "string",
                                     "RO": "string",
+                                    "HPP": "string",
                                     "Error": "string"
-                                }; 
-                                response.xls(`Error Log-Pemasukan Barang Jadi ${moment(new Date()).format(dateFormat)}.xlsx`, doc, options);  
+                                };
+                                response.xls(`Error Log-Pemasukan Barang Jadi ${moment(new Date()).format(dateFormat)}.xlsx`, doc, options);
                             }
                         })
                         .catch(e => {
@@ -60,7 +61,7 @@ router.post('/',passport,(request, response, next) => {
                     response.send(404, error);
 
                 }
-            }); 
+            });
     })
 });
 
