@@ -28,7 +28,7 @@ router.post('/', passport, (request, response, next) => {
             })
             .on('end', function (data) {
                 dataAll = dataCsv;
-                if (dataAll[0][0] === "PackingList" && dataAll[0][1] === "Password" && dataAll[0][2] === "Barcode" && dataAll[0][3] === "Name" && dataAll[0][4] === "Size" && dataAll[0][5] === "Price" && dataAll[0][6] === "UOM" && dataAll[0][7] === "QTY" && dataAll[0][8] === "RO") {
+                if (dataAll[0][0] === "PackingList" && dataAll[0][1] === "Password" && dataAll[0][2] === "Barcode" && dataAll[0][3] === "Name" && dataAll[0][4] === "Size" && dataAll[0][5] === "Price" && dataAll[0][6] === "UOM" && dataAll[0][7] === "QTY" && dataAll[0][8] === "RO" && dataAll[0][9] === "HPP") {
                     manager.insert(dataAll, request.params.sourceId, request.params.destinationId, request.params.date)
                         .then(doc => {
                             if (doc[0]["Error"] === undefined) {
@@ -46,6 +46,7 @@ router.post('/', passport, (request, response, next) => {
                                     "UOM": "string",
                                     "QTY": "string",
                                     "RO": "string",
+                                    "HPP": "string",
                                     "Error": "string"
                                 };
                                 response.xls(`Error Log-Pemasukan Barang Embalase ${moment(new Date()).format(dateFormat)}.xlsx`, doc, options);
