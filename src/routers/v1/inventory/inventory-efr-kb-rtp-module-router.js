@@ -6,37 +6,35 @@ var resultFormatter = require("../../../result-formatter");
 var ObjectId = require("mongodb").ObjectId;
 var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
-      
-router.get('/:id/exportall',passport, (request, response, next) => {
+
+router.get('/:id/exportall', passport, (request, response, next) => {
     db.get().then(db => {
         var Manager = map.get("efr-kb-rtp");
         var manager = new Manager(db, request.user);
-        
-        var id = request.params.id; 
-         
+
+        var id = request.params.id;
+
         manager.getSingleById(id)
             .then(doc => {
-                
-                
                 var dateFormat = "DD MMM YYYY";
                 var locale = 'id-ID';
                 var moment = require('moment');
                 moment.locale(locale);
-                
                 var data = [];
-                var index = 0; 
-                for(var item of doc.items) {
-                        var _data = {
+                var index = 0;
+                for (var item of doc.items) {
+                    var _data = {
                         "Nomor Referensi": doc.code,
                         "Dari": doc.source.code,
                         "Ke": doc.destination.code,
                         "Barcode": item.item.code,
                         "Nama": item.item.name,
-                        "QTY": item.quantity,
+                        "Kuantitas Pengiriman": item.quantity,
+                        "Harga": item.quantity * item.item.domesticSale,
                         "Catatan": item.remark
                     }
-                    data.push(_data); 
-                }  
+                    data.push(_data);
+                }
 
                 if ((request.headers.accept || '').toString().indexOf("application/xls") < 0) {
                     var result = resultFormatter.ok(apiVersion, 200, data);
