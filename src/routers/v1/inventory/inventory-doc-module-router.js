@@ -31,6 +31,19 @@ router.get('/:module', passport, (request, response, next) => {
             };
         }
 
+        if (module === "efr-tb-bbp") {
+            var moduleId = "EFR-TB/BBP";
+            filter = {
+                "code": {
+                    '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
+                },
+                "destination.code":
+                {
+                    $in: stores
+                }
+            };
+        }
+
         if (module === "efr-tb-bat") {
             var moduleId = "EFR-TB/BAT";
             filter = {
