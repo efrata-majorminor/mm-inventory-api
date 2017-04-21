@@ -6,65 +6,90 @@ var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
 
-router.get('/:module', passport,(request, response, next) => {
+router.get('/:module', passport, (request, response, next) => {
     db.get().then(db => {
 
         var module = request.params.module;
         var Manager = map.get(module);
         var manager = new Manager(db, request.user);
         var filter;
-        var stores=[]; 
-        for (var i=0; i<request.user.stores.length; i++)
-        {
+        var stores = [];
+        for (var i = 0; i < request.user.stores.length; i++) {
             stores.push(request.user.stores[i].code);
         }
         var query = request.query;
         if (module === "efr-tb-bbt") {
-            var moduleId="EFR-TB/BBT";
-            filter = { 
+            var moduleId = "EFR-TB/BBT";
+            filter = {
                 "code": {
                     '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
                 },
                 "destination.code":
                 {
                     $in: stores
-                } 
-            };
-        } 
-
-        if (module === "efr-tb-bat") {
-            var moduleId="EFR-TB/BAT";
-            filter = { 
-                "code": {
-                    '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
-                },
-                "destination.code":
-                {
-                    $in: stores
-                } 
+                }
             };
         }
 
-         if (module === "efr-kb-rtp") {
-            var moduleId="EFR-KB/RTP"; 
+        if (module === "efr-tb-bbp") {
+            var moduleId = "EFR-TB/BBP";
+            filter = {
+                "code": {
+                    '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
+                },
+                "destination.code":
+                {
+                    $in: stores
+                }
+            };
+        }
+
+        if (module === "efr-tb-bat") {
+            var moduleId = "EFR-TB/BAT";
+            filter = {
+                "code": {
+                    '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
+                },
+                "destination.code":
+                {
+                    $in: stores
+                }
+            };
+        }
+
+        if (module === "efr-kb-rtp") {
+            var moduleId = "EFR-KB/RTP";
             var regexModuleId = new RegExp(moduleId, "i");
-            filter = { 
+            filter = {
                 "code": {
                     '$regex': regexModuleId
                 },
                 "source.code":
                 {
                     $in: stores
-                } 
+                }
             };
-        } 
+        }
+        if (module === "efr-kb-rtt") {
+            var moduleId = "EFR-KB/RTT";
+            var regexModuleId = new RegExp(moduleId, "i");
+            filter = {
+                "code": {
+                    '$regex': regexModuleId
+                },
+                "source.code":
+                {
+                    $in: stores
+                }
+            };
+        }
 
         query.filter = filter;
         query.order = {
             "_createdDate": -1
         };
         query.select = [
-            "code", "reference", "source.name","source.code","destination.code", "destination.name", "_createdDate", "_createdBy"
+            "code", "reference", "source.name", "source.code", "destination.code", "destination.name", "_createdDate", "_createdBy"
         ];
 
         manager.read(query)
@@ -129,7 +154,7 @@ router.post('/:module', passport, (request, response, next) => {
     })
 });
 
-router.put('/:module/:id', passport,(request, response, next) => {
+router.put('/:module/:id', passport, (request, response, next) => {
     db.get().then(db => {
 
         var module = request.params.module;
