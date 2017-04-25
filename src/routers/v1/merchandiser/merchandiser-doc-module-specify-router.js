@@ -15,7 +15,7 @@ router.get('/efr-pk/pending', (request, response, next) => {
         
         var query = request.query;
 
-        manager.readNotReceived(query)
+        manager.readNotReceivedAndDraft(query)
             .then(docs => { 
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
