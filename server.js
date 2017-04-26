@@ -36,7 +36,7 @@ transferInDocRouter.applyRoutes(server, "v1/inventory/docs/transfer-in");
 
 var transferOutDocRouter = require('./src/routers/v1/inventory/transfer-out-doc-router');
 transferOutDocRouter.applyRoutes(server, "v1/inventory/docs/transfer-out");
- 
+
 var inventoryEfrKbRtpModuleRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtp-module-router');
 inventoryEfrKbRtpModuleRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtp");
 
@@ -60,6 +60,9 @@ uploadPbjRouter.applyRoutes(server, "v1/merchandiser/upload");
 
 var uploadPbaRouter = require('./src/routers/v1/merchandiser/upload-csv-file-pba-router');
 uploadPbaRouter.applyRoutes(server, "v1/merchandiser/upload/pba");
+
+var uploadFGRouter = require('./src/routers/v1/inventory/upload-finishgoods-router');
+uploadFGRouter.applyRoutes(server, "v1/inventory/upload-finishgoods");
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
