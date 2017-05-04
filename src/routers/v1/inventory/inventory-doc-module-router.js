@@ -131,6 +131,37 @@ router.get('/:module/:id', (request, response, next) => {
     })
 });
 
+
+router.get('/print/:module/:id', (request, response, next) => {
+    db.get().then(db => {
+
+        var module = request.params.module;
+        var Manager = map.get(module);
+
+        var id = request.params.id;
+        var manager = new Manager(db, {
+            username: request.user
+        });
+
+        manager.pdf(id).then(docBinary => {
+            manager.getSingleById(id)
+                .then(doc => {
+                    var name = doc.code.split('/').join('-');
+                    response.writeHead(200, {
+                        'Content-Type': 'application/pdf',
+                        'Content-Disposition': `attachment; filename=${name}.pdf`,
+                        'Content-Length': docBinary.length
+                    });
+                    response.end(docBinary);
+                })
+                .catch(e => {
+                    var error = resultFormatter.fail(apiVersion, 400, e);
+                    response.send(400, error);
+                });
+        });
+    })
+});
+
 router.post('/:module', passport, (request, response, next) => {
     db.get().then(db => {
 
