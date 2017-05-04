@@ -38,14 +38,14 @@ router.get('/efr-tb-bbp/pending', passport, (request, response, next) => {
     db.get().then(db => {
         var Manager = map.get("efr-tb-bbp");
         var manager = new Manager(db, request.user);
-        var stores = [];
-        for (var i = 0; i < request.user.stores.length; i++) {
-            stores.push(request.user.stores[i].code);
+        var units = [];
+        for (var unitCode in request.user.permission) {
+            units.push(unitCode);
         }
 
         var query = request.query;
-        if (stores.length > 0) {
-            query.filter = stores;
+        if (units.length > 0) {
+            query.filter = units;
         }
 
         manager.readPendingSPK(query)
