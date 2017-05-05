@@ -17,6 +17,12 @@ router.get('/:module', passport, (request, response, next) => {
         for (var i = 0; i < request.user.stores.length; i++) {
             stores.push(request.user.stores[i].code);
         }
+
+        var units = [];
+        for (var unitCode in request.user.permission) {
+            units.push(unitCode);
+        }
+
         var query = request.query;
         if (module === "efr-tb-bbt") {
             var moduleId = "EFR-TB/BBT";
@@ -39,7 +45,7 @@ router.get('/:module', passport, (request, response, next) => {
                 },
                 "destination.code":
                 {
-                    $in: stores
+                    $in: units
                 }
             };
         }
@@ -128,6 +134,37 @@ router.get('/:module/:id', (request, response, next) => {
                 response.send(400, error);
             })
 
+    })
+});
+
+
+router.get('/print/:module/:id', (request, response, next) => {
+    db.get().then(db => {
+
+        var module = request.params.module;
+        var Manager = map.get(module);
+
+        var id = request.params.id;
+        var manager = new Manager(db, {
+            username: request.user
+        });
+
+        manager.pdf(id).then(docBinary => {
+            manager.getSingleById(id)
+                .then(doc => {
+                    var name = doc.code.split('/').join('-');
+                    response.writeHead(200, {
+                        'Content-Type': 'application/pdf',
+                        'Content-Disposition': `attachment; filename=${name}.pdf`,
+                        'Content-Length': docBinary.length
+                    });
+                    response.end(docBinary);
+                })
+                .catch(e => {
+                    var error = resultFormatter.fail(apiVersion, 400, e);
+                    response.send(400, error);
+                });
+        });
     })
 });
 
