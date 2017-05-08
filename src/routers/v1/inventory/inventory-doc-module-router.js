@@ -17,6 +17,12 @@ router.get('/:module', passport, (request, response, next) => {
         for (var i = 0; i < request.user.stores.length; i++) {
             stores.push(request.user.stores[i].code);
         }
+
+        var units = [];
+        for (var unitCode in request.user.permission) {
+            units.push(unitCode);
+        }
+
         var query = request.query;
         if (module === "efr-tb-bbt") {
             var moduleId = "EFR-TB/BBT";
@@ -39,7 +45,7 @@ router.get('/:module', passport, (request, response, next) => {
                 },
                 "destination.code":
                 {
-                    $in: stores
+                    $in: units
                 }
             };
         }
