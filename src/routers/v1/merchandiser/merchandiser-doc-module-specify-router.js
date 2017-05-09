@@ -94,6 +94,28 @@ router.get('/efr-pk/rtt', (request, response, next) => {
     })
 });
 
+router.get('/efr-pk/rtp', (request, response, next) => {
+    db.get().then(db => {
+        var Manager = map.get("efr-pk");
+        var manager = new Manager(db, {
+            username: 'router'
+        });
+        
+        var query = request.query;
+
+        manager.getByReference(query.reference)
+            .then(docs => { 
+                var result = resultFormatter.ok(apiVersion, 200, docs);
+                response.send(200, result);
+            })
+            .catch(e => {
+                var error = resultFormatter.fail(apiVersion, 400, e);
+                response.send(400, error);
+            })
+
+    })
+});
+
 router.get('/efr-pk/expedition', (request, response, next) => {
     db.get().then(db => {
         var Manager = map.get("efr-pk");
@@ -117,6 +139,5 @@ router.get('/efr-pk/expedition', (request, response, next) => {
 
     })
 });
-
 
 module.exports = router;
