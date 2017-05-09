@@ -26,26 +26,6 @@ router.get('/:module/draft/:id', passport, (request, response, next) => {
     })
 });
 
-router.post('/:module/draft', passport, (request, response, next) => {
-    db.get().then(db => {
-        var module = request.params.module;
-        var Manager = map.get(module);
-        var manager = new Manager(db, request.user);
-
-        var data = request.body;
-        manager.createDraft(data)
-            .then(docId => {
-                response.header('Location', `merchandisers/docs/${module}/draft/${docId.toString()}`);
-                var result = resultFormatter.ok(apiVersion, 201);
-                response.send(201, result);
-            })
-            .catch(e => {
-                var error = resultFormatter.fail(apiVersion, 400, e);
-                response.send(400, error);
-            })
-    })
-});
-
 router.post('/:module', passport, (request, response, next) => {
     db.get().then(db => {
         var module = request.params.module;
@@ -55,7 +35,7 @@ router.post('/:module', passport, (request, response, next) => {
         var data = request.body;
         manager.create(data)
             .then(docId => {
-                response.header('Location', `merchandisers/docs/${module}/draft/${docId.toString()}`);
+                response.header('Location', `merchandisers/docs/${module}/${docId.toString()}`);
                 var result = resultFormatter.ok(apiVersion, 201);
                 response.send(201, result);
             })
@@ -64,7 +44,7 @@ router.post('/:module', passport, (request, response, next) => {
                 response.send(400, error);
             })
     })
-});
+}); 
 
 router.del('/:module/draft/:id', passport, (request, response, next) => {
     db.get().then(db => {
