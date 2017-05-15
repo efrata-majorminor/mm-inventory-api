@@ -43,6 +43,9 @@ inventoryEfrKbRtpModuleRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtp"
 var inventoryEfrKbRttReportRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtt-report-router');
 inventoryEfrKbRttReportRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtt/:datefrom/:dateto/:status");
 
+var inventoryEfrKbRttReportRouter = require('./src/routers/v1/inventory/inventory-efr-kb-exp-report-router');
+inventoryEfrKbRttReportRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-exp/report");
+
 var inventoryReceiveModuleRouter = require('./src/routers/v1/inventory/inventory-receive-module-router');
 inventoryReceiveModuleRouter.applyRoutes(server, "v1/inventory/docs");
 
