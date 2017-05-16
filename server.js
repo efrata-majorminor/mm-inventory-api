@@ -40,6 +40,9 @@ transferOutDocRouter.applyRoutes(server, "v1/inventory/docs/transfer-out");
 var inventoryEfrKbRtpModuleRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtp-module-router');
 inventoryEfrKbRtpModuleRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtp");
 
+var inventoryEfrKbRtpModuleRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtu-module-router');
+inventoryEfrKbRtpModuleRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtu");
+
 var inventoryEfrKbRttReportRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtt-report-router');
 inventoryEfrKbRttReportRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtt/:datefrom/:dateto/:status");
 
