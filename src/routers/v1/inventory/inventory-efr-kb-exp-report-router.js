@@ -21,7 +21,7 @@ router.get('/:storageId/:dateFrom/:dateTo/', passport, (request, response, next)
             dateTo: new Date(request.params.dateTo),
             transaction: request.params.transaction || 0,
             packingListStatus: packingListStatus == 1,
-            storageId: request.params.storageId
+            storageId: request.params.storageId || ""
         }
 
         manager.getReport(filter).then(docs => {
