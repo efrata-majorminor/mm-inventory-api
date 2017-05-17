@@ -90,6 +90,20 @@ router.get('/:module', passport, (request, response, next) => {
             };
         }
 
+        if (module === "efr-kb-rtu") {
+            var moduleId = "EFR-KB/RTU";
+            var regexModuleId = new RegExp(moduleId, "i");
+            filter = {
+                "code": {
+                    '$regex': regexModuleId
+                },
+                "source.code":
+                {
+                    $in: units
+                }
+            };
+        }
+
         query.filter = filter;
         query.order = {
             "_createdDate": -1
