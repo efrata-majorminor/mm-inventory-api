@@ -46,14 +46,17 @@ inventoryEfrKbRtpModuleRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtu"
 var inventoryEfrKbRttReportRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtt-report-router');
 inventoryEfrKbRttReportRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtt/:datefrom/:dateto/:status");
 
-var inventoryEfrKbRttReportRouter = require('./src/routers/v1/inventory/inventory-efr-kb-exp-report-router');
-inventoryEfrKbRttReportRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-exp/report");
+var inventoryEfrKbExpReportRouter = require('./src/routers/v1/inventory/inventory-efr-kb-exp-report-router');
+inventoryEfrKbExpReportRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-exp/report");
 
 var inventoryReceiveModuleRouter = require('./src/routers/v1/inventory/inventory-receive-module-router');
 inventoryReceiveModuleRouter.applyRoutes(server, "v1/inventory/docs");
 
 var inventoryDocModuleRouter = require('./src/routers/v1/inventory/inventory-doc-module-router');
 inventoryDocModuleRouter.applyRoutes(server, "v1/inventory/docs");
+
+var packingListreportRouter = require('./src/routers/v1/merchandiser/merchandiser-packing-list-report-router');
+packingListreportRouter.applyRoutes(server, "v1/merchandiser/docs/report");
 
 var merchandiserDocModuleSpecifyRouter = require('./src/routers/v1/merchandiser/merchandiser-doc-module-specify-router');
 merchandiserDocModuleSpecifyRouter.applyRoutes(server, "v1/merchandiser/docs");
