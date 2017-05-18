@@ -49,7 +49,7 @@ router.get('/export/:storageId/:dateFrom/:dateTo/:transaction/:packingListStatus
             dateFrom: new Date(request.params.dateFrom),
             dateTo: new Date(request.params.dateTo),
             transaction: request.params.transaction || 0,
-            packingListStatus: packingListStatus == 1,
+            packingListStatus: packingListStatus,
             storageId: request.params.storageId
         }
         var dateFormat = "DD MMM YYYY";
