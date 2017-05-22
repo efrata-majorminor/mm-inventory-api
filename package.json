@@ -4,6 +4,7 @@
   "description": "Bateeq RESTful inventory api",
   "main": "server.js",
   "dependencies": {
+
     // "bateeq-module": "git+https://github.com/danliris/bateeq-module.git#dev",
     // "fast-csv": "^2.3.0",
     // "js-toolkit": "git+https://github.com/pinkgorilla/js-toolkit.git",
@@ -18,6 +19,7 @@
     // "mongodb-toolkit": "git+https://github.com/pinkgorilla/mongodb-toolkit.git",
     // "restify": "^4.1.1",
     // "restify-router": "^0.2.1"
+
   },
   "devDependencies": {
     "should": "^9.0.2"
