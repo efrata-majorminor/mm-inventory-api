@@ -91,7 +91,7 @@ router.get('/export/:storageId/:dateFrom/:dateTo/:transaction/:packingListStatus
                 return [].concat.apply([], details);
             })
 
-            var statusCode = filter.packingListStatus ? "Sudah Diterima" : "Belum Diterima";
+            var statusCode = filter.packingListStatus == 0 ? "Belum Diterima" : "Sudah Diterima";
             var transactionCode = filter.transaction == 0 ? "Pengiriman Barang Baru" : "Pengiriman Barang Retur";
 
             data = [].concat.apply([], data);
