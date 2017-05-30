@@ -31,6 +31,9 @@ storageInventoryRouter.applyRoutes(server, "v1/inventory/storages");
 var storageInventoryMovementRouter = require('./src/routers/v1/inventory/storage-inventory-movement-router');
 storageInventoryMovementRouter.applyRoutes(server, "v1/inventory/storages");
 
+var storageInventoryMovementRouter = require('./src/routers/v1/inventory/inventory-ro-report-router');
+storageInventoryMovementRouter.applyRoutes(server, "v1/inventory/inventory-ro-report");
+
 var transferInDocRouter = require('./src/routers/v1/inventory/transfer-in-doc-router');
 transferInDocRouter.applyRoutes(server, "v1/inventory/docs/transfer-in");
 
