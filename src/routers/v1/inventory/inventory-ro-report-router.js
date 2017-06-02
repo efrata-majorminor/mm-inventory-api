@@ -68,6 +68,14 @@ router.get('/:codeRO/xls', passport, (request, response, next) => {
                     data.push(_data);
                 }
 
+                for (var head of tableHeader) {
+                    for (var item of data) {
+                        if (!item.hasOwnProperty(head)) {
+                            item[head] = 0;
+                        }
+                    }
+                }
+                
                 if ((request.headers.accept || '').toString().indexOf("application/xls") < 0) {
                     var result = resultFormatter.ok(apiVersion, 200, docs);
                     response.send(200, result);
