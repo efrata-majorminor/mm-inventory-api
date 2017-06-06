@@ -37,6 +37,9 @@ transferInDocRouter.applyRoutes(server, "v1/inventory/docs/transfer-in");
 var transferOutDocRouter = require('./src/routers/v1/inventory/transfer-out-doc-router');
 transferOutDocRouter.applyRoutes(server, "v1/inventory/docs/transfer-out");
 
+var adjustmentDocRouter = require('./src/routers/v1/inventory/adjustment-doc-router');
+adjustmentDocRouter.applyRoutes(server, "v1/inventory/docs/adjustment");
+
 var inventoryEfrKbRtpModuleRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtp-module-router');
 inventoryEfrKbRtpModuleRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtp");
 
