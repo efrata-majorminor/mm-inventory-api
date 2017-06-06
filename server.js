@@ -31,23 +31,35 @@ storageInventoryRouter.applyRoutes(server, "v1/inventory/storages");
 var storageInventoryMovementRouter = require('./src/routers/v1/inventory/storage-inventory-movement-router');
 storageInventoryMovementRouter.applyRoutes(server, "v1/inventory/storages");
 
+var storageInventoryMovementRouter = require('./src/routers/v1/inventory/inventory-ro-report-router');
+storageInventoryMovementRouter.applyRoutes(server, "v1/inventory/inventory-ro-report");
+
 var transferInDocRouter = require('./src/routers/v1/inventory/transfer-in-doc-router');
 transferInDocRouter.applyRoutes(server, "v1/inventory/docs/transfer-in");
 
 var transferOutDocRouter = require('./src/routers/v1/inventory/transfer-out-doc-router');
 transferOutDocRouter.applyRoutes(server, "v1/inventory/docs/transfer-out");
- 
+
 var inventoryEfrKbRtpModuleRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtp-module-router');
 inventoryEfrKbRtpModuleRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtp");
 
+var inventoryEfrKbRtpModuleRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtu-module-router');
+inventoryEfrKbRtpModuleRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtu");
+
 var inventoryEfrKbRttReportRouter = require('./src/routers/v1/inventory/inventory-efr-kb-rtt-report-router');
 inventoryEfrKbRttReportRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-rtt/:datefrom/:dateto/:status");
+
+var inventoryEfrKbExpReportRouter = require('./src/routers/v1/inventory/inventory-efr-kb-exp-report-router');
+inventoryEfrKbExpReportRouter.applyRoutes(server, "v1/inventory/docs/efr-kb-exp/report");
 
 var inventoryReceiveModuleRouter = require('./src/routers/v1/inventory/inventory-receive-module-router');
 inventoryReceiveModuleRouter.applyRoutes(server, "v1/inventory/docs");
 
 var inventoryDocModuleRouter = require('./src/routers/v1/inventory/inventory-doc-module-router');
 inventoryDocModuleRouter.applyRoutes(server, "v1/inventory/docs");
+
+var packingListreportRouter = require('./src/routers/v1/merchandiser/merchandiser-packing-list-report-router');
+packingListreportRouter.applyRoutes(server, "v1/merchandiser/docs/report");
 
 var merchandiserDocModuleSpecifyRouter = require('./src/routers/v1/merchandiser/merchandiser-doc-module-specify-router');
 merchandiserDocModuleSpecifyRouter.applyRoutes(server, "v1/merchandiser/docs");
@@ -60,6 +72,9 @@ uploadPbjRouter.applyRoutes(server, "v1/merchandiser/upload");
 
 var uploadPbaRouter = require('./src/routers/v1/merchandiser/upload-csv-file-pba-router');
 uploadPbaRouter.applyRoutes(server, "v1/merchandiser/upload/pba");
+
+var uploadFGRouter = require('./src/routers/v1/inventory/upload-finishgoods-router');
+uploadFGRouter.applyRoutes(server, "v1/inventory/upload-finishgoods");
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
