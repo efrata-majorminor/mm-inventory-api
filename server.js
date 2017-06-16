@@ -79,5 +79,8 @@ uploadPbaRouter.applyRoutes(server, "v1/merchandiser/upload/pba");
 var uploadFGRouter = require('./src/routers/v1/inventory/upload-finishgoods-router');
 uploadFGRouter.applyRoutes(server, "v1/inventory/upload-finishgoods");
 
+var stockOpnameRouter = require('./src/routers/v1/inventory/stock-opname-doc-router');
+stockOpnameRouter.applyRoutes(server, "v1/inventory/stock-opnames");
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
