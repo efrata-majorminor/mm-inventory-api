@@ -80,45 +80,57 @@ router.post('/', passport, (request, response, next) => {
         var dataCsv = [];
         var dataAll;
         var manager = new SOManager(db, request.user);
+        var dataType = request.files.fileUpload.name.split(".");
 
-        fs.createReadStream(request.files.fileUpload.path)
-            .pipe(csv())
-            .on('data', function (data) {
-                dataCsv.push(data);
-            })
-            .on('end', function (data) {
-                dataAll = dataCsv;
-                if (dataAll[0][0] === "Barcode" && dataAll[0][1] === "Nama Barang" && dataAll[0][2] === "Kuantitas Stock") {
-                    var data = {
-                        dataFile : dataAll,
-                        storageId : request.params.storageId
+        if(dataType[dataType.length - 1] === "csv"){
+            fs.createReadStream(request.files.fileUpload.path)
+                .pipe(csv())
+                .on('data', function (data) {
+                    dataCsv.push(data);
+                })
+                .on('end', function (data) {
+                    dataAll = dataCsv;
+                    var isTrue = true;
+                    for(var a of dataAll){
+                        if(a.length > 3){
+                            isTrue = false;
+                        }
                     }
-                    manager.create(data)
-                        .then(doc => {
-                            if (ObjectId.isValid(doc)) {
-                                var result = resultFormatter.ok(apiVersion, 201, doc);
-                                response.send(201, result);
-                            }
-                            else {
-                                var options = {
-                                    "Barcode": "string",
-                                    "Nama Barang": "string",
-                                    "Kuantitas Stock": "Number",
-                                    "Deskripsi Error": "string"
-                                };
-                                response.xls(`Error Log-Stock Opname ${moment(new Date()).format(dateFormat)}.xlsx`, doc, options);
-                            }
-                        })
-                        .catch(e => {
-                            var error = resultFormatter.fail(apiVersion, 404, e);
-                            response.send(404, error);
-                        })
-                } else {
-                    var error = resultFormatter.fail(apiVersion, 404, "");
-                    response.send(404, error);
+                    if (dataAll[0][0] === "Barcode" && dataAll[0][1] === "Nama Barang" && dataAll[0][2] === "Kuantitas Stock" && isTrue) {
+                        var data = {
+                            dataFile : dataAll,
+                            storageId : request.params.storageId
+                        }
+                        manager.create(data)
+                            .then(doc => {
+                                if (ObjectId.isValid(doc)) {
+                                    var result = resultFormatter.ok(apiVersion, 201, doc);
+                                    response.send(201, result);
+                                }
+                                else {
+                                    var options = {
+                                        "Barcode": "string",
+                                        "Nama Barang": "string",
+                                        "Kuantitas Stock": "Number",
+                                        "Deskripsi Error": "string"
+                                    };
+                                    response.xls(`Error Log-Stock Opname ${moment(new Date()).format(dateFormat)}.xlsx`, doc, options);
+                                }
+                            })
+                            .catch(e => {
+                                var error = resultFormatter.fail(apiVersion, 404, e);
+                                response.send(404, error);
+                            })
+                    } else {
+                        var error = resultFormatter.fail(apiVersion, 404, "");
+                        response.send(404, error);
 
-                }
-            });
+                    }
+                });
+        }else{
+            var error = resultFormatter.fail(apiVersion, 412, "");
+            response.send(412, error);
+        }
     })
 });
 

@@ -54,5 +54,28 @@ router.get('/:storageId/inventories/:itemId', (request, response, next) => {
     })
 }); 
 
+//new
+
+router.get('/items/:itemId', (request, response, next) => {
+    db.get().then(db => {
+        var manager = new InventoryManager(db, {
+            username: 'router'
+        });
+        
+        
+        var itemId = request.params.itemId;
+
+        manager.getInventoryByItem(itemId)
+            .then(doc => {
+                var result = resultFormatter.ok(apiVersion, 200, doc);
+                response.send(200, result); 
+            })
+            .catch(e => {
+                var error = resultFormatter.fail(apiVersion, 400, e);
+                response.send(400, error);
+            })
+
+    })
+}); 
 
 module.exports = router;
