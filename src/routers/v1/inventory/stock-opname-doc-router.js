@@ -128,8 +128,8 @@ router.post('/', passport, (request, response, next) => {
                     }
                 });
         }else{
-            var error = resultFormatter.fail(apiVersion, 404, "");
-            response.send(404, error);
+            var error = resultFormatter.fail(apiVersion, 412, "");
+            response.send(412, error);
         }
     })
 });
