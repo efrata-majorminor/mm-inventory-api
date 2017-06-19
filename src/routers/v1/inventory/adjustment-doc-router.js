@@ -7,6 +7,31 @@ var passport = require('../../../passports/jwt-passport');
 
 const apiVersion = '1.0.0';
 
+router.get('/storage/:storageId', (request, response, next) => {
+    db.get().then(db => {
+        var manager = new AdjustmentStockManager(db, {
+            username: 'router'
+        });
+        
+        var storageId = request.params.storageId;
+        var query = request.query;
+        
+        manager.getReportAdjustment(storageId)
+            .then(docs => { 
+                var result = resultFormatter.ok(apiVersion, 200, docs);
+                // delete docs.data;
+                // result.info = docs;
+                response.send(200, result);
+            })
+            .catch(e => {
+                var error = resultFormatter.fail(apiVersion, 400, e);
+                response.send(400, error);
+            })
+
+    })
+});
+
+
 router.get('/', passport, (request, response, next) => {
     db.get().then(db => {
         var manager = new AdjustmentStockManager(db, request.user);
