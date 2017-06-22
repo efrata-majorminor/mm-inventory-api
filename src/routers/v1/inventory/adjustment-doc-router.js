@@ -37,7 +37,9 @@ router.get('/', passport, (request, response, next) => {
         var manager = new AdjustmentStockManager(db, request.user);
 
         var query = request.query;
-        
+        query.order ={
+            "_updatedDate": -1
+        }
         query.filter ={
             "_createdBy": request.user.username
         }
