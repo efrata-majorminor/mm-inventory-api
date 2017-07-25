@@ -82,5 +82,8 @@ uploadFGRouter.applyRoutes(server, "v1/inventory/upload-finishgoods");
 var stockOpnameRouter = require('./src/routers/v1/inventory/stock-opname-doc-router');
 stockOpnameRouter.applyRoutes(server, "v1/inventory/stock-opnames");
 
+var stockAvailabilityRouter = require('./src/routers/v1/inventory/stock-availability-router');
+stockAvailabilityRouter.applyRoutes(server, "v1/inventory/stock-availability")
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
