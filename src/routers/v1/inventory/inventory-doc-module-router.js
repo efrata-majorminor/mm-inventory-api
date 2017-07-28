@@ -104,13 +104,29 @@ router.get('/:module', passport, (request, response, next) => {
             };
         }
 
+        if (module === "efr-kb-exp") {
+            var moduleId = "EFR-KB/EXP";
+            var regexModuleId = new RegExp(moduleId, "i");
+            filter = {
+                "code": {
+                    '$regex': regexModuleId
+                },
+                "_createdBy": request.user.username
+            };
+        }
+
         query.filter = filter;
         query.order = {
             "_createdDate": -1
         };
-        query.select = [
-            "code", "reference", "source.name", "source.code", "destination.code", "destination.name", "_createdDate", "_createdBy"
-        ];
+        if (module === "efr-kb-exp") {
+            query.select = ["code", "expedition", "weight", "date", "spkDocuments", "_createdBy"]
+        } else {
+            query.select = [
+                "code", "reference", "source.name", "source.code", "destination.code", "destination.name", "_createdDate", "_createdBy"
+            ];
+        }
+
 
         manager.read(query)
             .then(docs => {
