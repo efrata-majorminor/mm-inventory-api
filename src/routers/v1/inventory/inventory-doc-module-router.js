@@ -130,6 +130,11 @@ router.get('/:module', passport, (request, response, next) => {
 
         manager.read(query)
             .then(docs => {
+                 if (module === "efr-kb-exp") { 
+                    for (var i = 0; i < docs.data.length; i++) {
+                        docs.data[i].spkDocuments = docs.data[i].spkDocuments[0].destination.name; 
+                    }
+                }
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
                 result.info = docs;
