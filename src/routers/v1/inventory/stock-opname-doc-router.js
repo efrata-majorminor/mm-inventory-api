@@ -34,7 +34,6 @@ router.get('/', passport, (request, response, next) => {
         var manager = new SOManager(db, request.user);
         
         var query = request.query;
-        query.order = {"_updatedDate" : -1};
 
         manager.read(query)
             .then(docs => { 
