@@ -120,7 +120,7 @@ router.get('/:module', passport, (request, response, next) => {
             "_createdDate": -1
         };
         if (module === "efr-kb-exp") {
-            query.select = ["code", "expedition", "weight", "date", "spkDocuments", "_createdBy"]
+            query.select = ["code", "expedition.name", "weight", "date", "spkDocuments", "_createdBy"]
         } else {
             query.select = [
                 "code", "reference", "source.name", "source.code", "destination.code", "destination.name", "_createdDate", "_createdBy"
@@ -130,7 +130,7 @@ router.get('/:module', passport, (request, response, next) => {
 
         manager.read(query)
             .then(docs => {
-                 if (module === "efr-kb-exp") { 
+                if (module === "efr-kb-exp") { 
                     for (var i = 0; i < docs.data.length; i++) {
                         docs.data[i].spkDocuments = docs.data[i].spkDocuments[0].destination.name; 
                     }
