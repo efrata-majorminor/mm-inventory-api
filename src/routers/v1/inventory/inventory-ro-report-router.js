@@ -14,11 +14,11 @@ const apiVersion = '1.0.0';
  */
 router.get('/:codeRO', passport, (request, response, next) => {
     db.get().then(db => {
-        var Manager = map.get("inv-ro-report");
+        var Manager = map.get("report-manager");
         var manager = new Manager(db, request.user);
         var codeRO = request.params.codeRO;
 
-        manager.getROItem(codeRO)
+        manager.getReportItemsByRealizationOrder(codeRO)
             .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs);
                 result.info = docs;
