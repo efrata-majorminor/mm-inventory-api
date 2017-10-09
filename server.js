@@ -83,7 +83,10 @@ var stockOpnameRouter = require('./src/routers/v1/inventory/stock-opname-doc-rou
 stockOpnameRouter.applyRoutes(server, "v1/inventory/stock-opnames");
 
 var stockAvailabilityRouter = require('./src/routers/v1/inventory/stock-availability-router');
-stockAvailabilityRouter.applyRoutes(server, "v1/inventory/stock-availability")
+stockAvailabilityRouter.applyRoutes(server, "v1/inventory/stock-availability");
+
+var monthlyStockRouter = require('./src/routers/v1/inventory/monthly-stock-router');
+monthlyStockRouter.applyRoutes(server, "v1/inventory/monthly-stocks");
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
