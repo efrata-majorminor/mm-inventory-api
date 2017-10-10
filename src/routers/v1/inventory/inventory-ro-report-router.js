@@ -32,55 +32,53 @@ router.get('/:codeRO', passport, (request, response, next) => {
 
 router.get('/:codeRO/xls', passport, (request, response, next) => {
     db.get().then(db => {
-        var Manager = map.get("inv-ro-report");
+        var Manager = map.get("report-manager");
         var manager = new Manager(db, request.user);
         var codeRO = request.params.codeRO;
+        var tempArr = [];
+        var size = [];
 
-        manager.getROItem(codeRO)
-            .then(docs => {
-                var tableHeader = [];
-                var data = []
+        manager.getReportItemsByRealizationOrder(codeRO)
+            .then(dataResult => {
+                var data = [];
                 var moment = require('moment');
                 var dateFormat = "DD MMM YYYY";
 
-                for (var items of docs) {
-                    var _data = {
-                        " ": items._id
-                    };
-
-                    for (var i = 0; i < items.items.length; i++) {
-                        var roItems = items.items[i];
-
-                        if (tableHeader.indexOf(roItems.item) === -1) {
-                            tableHeader.push(roItems.item);
-                        }
-
-                        console.log(roItems.quantity);
-
-                        _data[roItems.item] = roItems.quantity;
-
-                        for (var j = 0; j < items.items.length; j++) {
-                            if (roItems.itemcode !== items.items[j].itemcode && roItems.item === items.items[j].item) {
-                                _data[roItems.item] += items.items[j].quantity;
-                            }
-                        }
+                for (var dataItem of dataResult) {
+                    if (!data[dataItem.storageName]) {
+                        data[dataItem.storageName] = {};
+                        data[dataItem.storageName]["Toko"] = dataItem.storageName;
                     }
-                    data.push(_data);
+
+                    data[dataItem.storageName]["Stok Ukuran " + dataItem.itemDetail.size] = dataItem.itemDetail.quantityOnInventory;
+                    data[dataItem.storageName]["Stok Terjual Ukuran " + dataItem.itemDetail.size] = dataItem.itemDetail.quantityOnSales;
                 }
 
-                for (var head of tableHeader) {
-                    for (var item of data) {
-                        if (!item.hasOwnProperty(head)) {
-                            item[head] = 0;
+                for (var dataItem of dataResult) {
+                    if (data[dataItem.storageName]) {
+                        if (!data[dataItem.storageName]["Total Stok"] && !data[dataItem.storageName]["Total Stok Terjual"]) {
+                            data[dataItem.storageName]['Umur'] = dataItem.age;
+                            data[dataItem.storageName]["Total Stok"] = 0;
+                            data[dataItem.storageName]["Total Stok Terjual"] = 0;
                         }
+                        data[dataItem.storageName]["Total Stok"] += dataItem.itemDetail.quantityOnInventory;
+                        data[dataItem.storageName]["Total Stok Terjual"] += dataItem.itemDetail.quantityOnSales;
                     }
                 }
-                
+
+                var props = Object.getOwnPropertyNames(data);
+
+                for (var i = 1; i < props.length; i++) {
+                    tempArr.push(data[props[i]]);
+                }
+
+                data = tempArr;
+
                 if ((request.headers.accept || '').toString().indexOf("application/xls") < 0) {
-                    var result = resultFormatter.ok(apiVersion, 200, docs);
+                    var result = resultFormatter.ok(apiVersion, 200, dataResult);
                     response.send(200, result);
                 } else {
-                    response.xls(`Report Stok RO - ${moment(new Date()).format(dateFormat)}.xlsx`, data);
+                    response.xls(`Report Stok with RO ${codeRO} - ${moment(new Date()).format(dateFormat)}.xlsx`, data);
                 }
             }).catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
