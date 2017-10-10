@@ -40,7 +40,6 @@ router.get('/:codeRO/xls', passport, (request, response, next) => {
 
         manager.getReportItemsByRealizationOrder(codeRO)
             .then(dataResult => {
-                var dataToXls = [];
                 var data = [];
                 var moment = require('moment');
                 var dateFormat = "DD MMM YYYY";
@@ -57,13 +56,13 @@ router.get('/:codeRO/xls', passport, (request, response, next) => {
 
                 for (var dataItem of dataResult) {
                     if (data[dataItem.storageName]) {
-                        if (!data[dataItem.storageName]["Total Stok"] && !data[dataItem.storageName]["Total Terjual"]) {
-                            data[dataItem.storageName]["Total Stok"] = 0;
-                            data[dataItem.storageName]["Total Terjual"] = 0;
+                        if (!data[dataItem.storageName]["Total Stok"] && !data[dataItem.storageName]["Total Stok Terjual"]) {
                             data[dataItem.storageName]['Umur'] = dataItem.age;
+                            data[dataItem.storageName]["Total Stok"] = 0;
+                            data[dataItem.storageName]["Total Stok Terjual"] = 0;
                         }
                         data[dataItem.storageName]["Total Stok"] += dataItem.itemDetail.quantityOnInventory;
-                        data[dataItem.storageName]["Total Terjual"] += dataItem.itemDetail.quantityOnSales;
+                        data[dataItem.storageName]["Total Stok Terjual"] += dataItem.itemDetail.quantityOnSales;
                     }
                 }
 
