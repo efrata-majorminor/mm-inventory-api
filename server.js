@@ -88,5 +88,9 @@ stockAvailabilityRouter.applyRoutes(server, "v1/inventory/stock-availability");
 var monthlyStockRouter = require('./src/routers/v1/inventory/monthly-stock-router');
 monthlyStockRouter.applyRoutes(server, "v1/inventory/monthly-stock");
 
+//Purchasing
+var purchaseRequest = require('./src/routers/v1/purchasing/purchase-request/purchase-request-by-user-router');
+purchaseRequest().applyRoutes(server, 'v1/purchasing/purchase-requests/by-user');
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
