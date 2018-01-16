@@ -1,7 +1,5 @@
 const apiVersion = '1.0.0';
 var db = require('../../../../db');
-var Router = require('restify-router').Router;;
-var router = new Router();
 var resultFormatter = require("../../../../result-formatter");
 var passport = require('../../../../passports/jwt-passport');
 var Manager = require("bateeq-module").purchasing.PurchasingRequestManager;
