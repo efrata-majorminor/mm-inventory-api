@@ -98,5 +98,11 @@ purchaseRequestPost().applyRoutes(server, 'v1/purchasing/purchase-requests/post'
 var purchaseRequestUnpost = require('./src/routers/v1/purchasing/purchase-request/purchase-request-unpost-router');
 purchaseRequestUnpost().applyRoutes(server, 'v1/purchasing/purchase-requests/unpost');
 
+//purchase-order
+var purchaseOrder = require('./src/routers/v1/purchasing/purchase-order/purchase-order-by-user-router');
+purchaseOrder().applyRoutes(server, 'v1/purchasing/purchase-orders/by-user');
+
+
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
