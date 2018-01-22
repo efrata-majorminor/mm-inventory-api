@@ -89,19 +89,24 @@ var monthlyStockRouter = require('./src/routers/v1/inventory/monthly-stock-route
 monthlyStockRouter.applyRoutes(server, "v1/inventory/monthly-stock");
 
 // Purchasing 
-var purchaseRequest = require('./src/routers/v1/purchasing/purchase-request/purchase-request-by-user-router');
-purchaseRequest().applyRoutes(server, 'v1/purchasing/purchase-requests/by-user');
+var purchaseRequestRouter = require('./src/routers/v1/purchasing/purchase-request/purchase-request-by-user-router');
+purchaseRequestRouter().applyRoutes(server, 'v1/purchasing/purchase-requests/by-user');
 
-var purchaseRequestPost = require('./src/routers/v1/purchasing/purchase-request/purchase-request-post-router');
-purchaseRequestPost().applyRoutes(server, 'v1/purchasing/purchase-requests/post');
+var purchaseRequestPostRouter = require('./src/routers/v1/purchasing/purchase-request/purchase-request-post-router');
+purchaseRequestPostRouter().applyRoutes(server, 'v1/purchasing/purchase-requests/post');
 
-var purchaseRequestUnpost = require('./src/routers/v1/purchasing/purchase-request/purchase-request-unpost-router');
-purchaseRequestUnpost().applyRoutes(server, 'v1/purchasing/purchase-requests/unpost');
+var purchaseRequestUnpostRouter = require('./src/routers/v1/purchasing/purchase-request/purchase-request-unpost-router');
+purchaseRequestUnpostRouter().applyRoutes(server, 'v1/purchasing/purchase-requests/unpost');
+
+var purchaseRequestPostedRouter = require('./src/routers/v1/purchasing/purchase-request/purchase-request-posted-router');
+purchaseRequestPostedRouter().applyRoutes(server, 'v1/purchasing/purchase-requests/posted');
 
 //purchase-order
-var purchaseOrder = require('./src/routers/v1/purchasing/purchase-order/purchase-order-by-user-router');
-purchaseOrder().applyRoutes(server, 'v1/purchasing/purchase-orders/by-user');
+var purchaseOrderRouter = require('./src/routers/v1/purchasing/purchase-order/purchase-order-by-user-router');
+purchaseOrderRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/by-user');
 
+var purchaseOrderSplitRouter = require('./src/routers/v1/purchasing/purchase-order/purchase-order-split-router');
+purchaseOrderSplitRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/split');
 
 
 server.listen(process.env.PORT, process.env.IP);
