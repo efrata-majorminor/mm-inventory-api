@@ -108,6 +108,24 @@ purchaseOrderRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/by-user
 var purchaseOrderSplitRouter = require('./src/routers/v1/purchasing/purchase-order/purchase-order-split-router');
 purchaseOrderSplitRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/split');
 
+var purchaseOrderUnposterRouter = require('./src/routers/v1/purchasing/purchase-order/purchase-order-un-posted-router');
+purchaseOrderUnposterRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/unposted')
+
+//Purchase-order External
+var purchaseOrderExternalRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-by-user-router');
+purchaseOrderExternalRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/by-user')
+
+var purchaseOrderExternalPostRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-post-router');
+purchaseOrderExternalPostRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/post');
+
+var purchaseOrderExternalCancelRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-cancel-router');
+purchaseOrderExternalCancelRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/cancel');
+
+var purchaseOrderExternalUnpostRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-unpost-router');
+purchaseOrderExternalUnpostRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/unpost');
+
+var purchaseOrderExternalCloseRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-close-router');
+purchaseOrderExternalCloseRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/close');
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
