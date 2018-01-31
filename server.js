@@ -127,5 +127,8 @@ purchaseOrderExternalUnpostRouter().applyRoutes(server, 'v1/purchasing/purchase-
 var purchaseOrderExternalCloseRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-close-router');
 purchaseOrderExternalCloseRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/close');
 
+var purchaseOrderExternalRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-router');
+purchaseOrderExternalRouter().applyRoutes(server, 'v1/purchasing/purchase-orders-externals');
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
