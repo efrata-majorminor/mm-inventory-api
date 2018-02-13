@@ -130,5 +130,12 @@ purchaseOrderExternalCloseRouter().applyRoutes(server, 'v1/purchasing/purchase-o
 var purchaseOrderExternalRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-router');
 purchaseOrderExternalRouter().applyRoutes(server, 'v1/purchasing/purchase-orders-externals');
 
+var purchaseOrderExternalsUnpostedRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-posted-router');
+purchaseOrderExternalsUnpostedRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/posted');
+
+//Delivery Orders (Surat Jalan)
+var deliveryOrderByUserRouter = require('./src/routers/v1/purchasing/delivery-order/delivery-order-by-user-router');
+deliveryOrderByUserRouter().applyRoutes(server, 'v1/purchasing/delivery-orders/by-user');
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
