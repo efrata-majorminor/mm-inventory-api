@@ -13,7 +13,7 @@ function getRouter() {
                 "_createdBy": request.user.username
             };
         },
-        defaultSelect: ["no", "supplierDoDate", "supplier.name", "items.purchaseOrderExternal.no"]
+        defaultSelect: []
     });
     return router;
 }
