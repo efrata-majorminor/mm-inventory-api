@@ -137,5 +137,12 @@ purchaseOrderExternalsUnpostedRouter().applyRoutes(server, 'v1/purchasing/purcha
 var deliveryOrderByUserRouter = require('./src/routers/v1/purchasing/delivery-order/delivery-order-by-user-router');
 deliveryOrderByUserRouter().applyRoutes(server, 'v1/purchasing/delivery-orders/by-user');
 
+var deliveryOrderBySupplierRouter = require('./src/routers/v1/purchasing/delivery-order/delivery-order-by-supplier-router');
+deliveryOrderBySupplierRouter().applyRoutes(server, 'v1/purchasing/delivery-orders/by-supplier');
+
+//unit receipt note (Bon Terima Unit)		
+var unitReceiptNoteByUserRouter = require('./src/routers/v1/purchasing/unit-receipt-note/unit-receipt-note-by-user-router');
+unitReceiptNoteByUserRouter().applyRoutes(server, '/v1/purchasing/unit-receipt-notes/by-user');
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
