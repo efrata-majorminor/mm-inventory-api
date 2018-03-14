@@ -144,5 +144,12 @@ deliveryOrderBySupplierRouter().applyRoutes(server, 'v1/purchasing/delivery-orde
 var unitReceiptNoteByUserRouter = require('./src/routers/v1/purchasing/unit-receipt-note/unit-receipt-note-by-user-router');
 unitReceiptNoteByUserRouter().applyRoutes(server, '/v1/purchasing/unit-receipt-notes/by-user');
 
+var unitPaymentOrderSupplierRouter = require('./src/routers/v1/purchasing/unit-receipt-note/unit-receipt-note-suplier-unit-router');
+unitPaymentOrderSupplierRouter().applyRoutes(server, '/v1/purchasing/unit-receipt-notes/by-supplier-unit');
+
+//unit payment order (surat perintah bayar)
+var unitPaymentOrderByUserRouter = require('./src/routers/v1/purchasing/unit-payment-order/unit-payment-order-by-user-router');
+unitPaymentOrderByUserRouter().applyRoutes(server, 'v1/purchasing/unit-payment-orders/by-user')
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
