@@ -1,5 +1,5 @@
 const apiVersion = '1.0.0';
-var Manager = require("bateeq-module").purchasing.PurchasingOrderManager;
+var Manager = require("bateeq-module").purchasing.DeliveryOrderManager;
 var JwtRouterFactory = require("../../jwt-router-factory");
 
 function getRouter() {
@@ -13,7 +13,6 @@ function getRouter() {
                 "_createdBy": request.user.username
             };
         },
-        // defaultSelect: ["unit.division.name", "unit.name", "category.name", "purchaseRequest.date", "purchaseRequest.no", "purchaseRequest.expectedDeliveryDate", "_createdBy", "purchaseOrderExternal.isPosted", "isPosted"]
         defaultSelect: []
     });
     return router;
