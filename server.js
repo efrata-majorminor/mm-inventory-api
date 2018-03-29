@@ -88,5 +88,68 @@ stockAvailabilityRouter.applyRoutes(server, "v1/inventory/stock-availability");
 var monthlyStockRouter = require('./src/routers/v1/inventory/monthly-stock-router');
 monthlyStockRouter.applyRoutes(server, "v1/inventory/monthly-stock");
 
+// Purchasing 
+var purchaseRequestRouter = require('./src/routers/v1/purchasing/purchase-request/purchase-request-by-user-router');
+purchaseRequestRouter().applyRoutes(server, 'v1/purchasing/purchase-requests/by-user');
+
+var purchaseRequestPostRouter = require('./src/routers/v1/purchasing/purchase-request/purchase-request-post-router');
+purchaseRequestPostRouter().applyRoutes(server, 'v1/purchasing/purchase-requests/post');
+
+var purchaseRequestUnpostRouter = require('./src/routers/v1/purchasing/purchase-request/purchase-request-unpost-router');
+purchaseRequestUnpostRouter().applyRoutes(server, 'v1/purchasing/purchase-requests/unpost');
+
+var purchaseRequestPostedRouter = require('./src/routers/v1/purchasing/purchase-request/purchase-request-posted-router');
+purchaseRequestPostedRouter().applyRoutes(server, 'v1/purchasing/purchase-requests/posted');
+
+//purchase-order
+var purchaseOrderRouter = require('./src/routers/v1/purchasing/purchase-order/purchase-order-by-user-router');
+purchaseOrderRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/by-user');
+
+var purchaseOrderSplitRouter = require('./src/routers/v1/purchasing/purchase-order/purchase-order-split-router');
+purchaseOrderSplitRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/split');
+
+var purchaseOrderUnposterRouter = require('./src/routers/v1/purchasing/purchase-order/purchase-order-un-posted-router');
+purchaseOrderUnposterRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/unposted')
+
+//Purchase-order External
+var purchaseOrderExternalRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-by-user-router');
+purchaseOrderExternalRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/by-user')
+
+var purchaseOrderExternalPostRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-post-router');
+purchaseOrderExternalPostRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/post');
+
+var purchaseOrderExternalCancelRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-cancel-router');
+purchaseOrderExternalCancelRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/cancel');
+
+var purchaseOrderExternalUnpostRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-unpost-router');
+purchaseOrderExternalUnpostRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/unpost');
+
+var purchaseOrderExternalCloseRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-close-router');
+purchaseOrderExternalCloseRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/close');
+
+var purchaseOrderExternalRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-router');
+purchaseOrderExternalRouter().applyRoutes(server, 'v1/purchasing/purchase-orders-externals');
+
+var purchaseOrderExternalsUnpostedRouter = require('./src/routers/v1/purchasing/purchase-order-external/purchase-order-external-posted-router');
+purchaseOrderExternalsUnpostedRouter().applyRoutes(server, 'v1/purchasing/purchase-orders/externals/posted');
+
+//Delivery Orders (Surat Jalan)
+var deliveryOrderByUserRouter = require('./src/routers/v1/purchasing/delivery-order/delivery-order-by-user-router');
+deliveryOrderByUserRouter().applyRoutes(server, 'v1/purchasing/delivery-orders/by-user');
+
+var deliveryOrderBySupplierRouter = require('./src/routers/v1/purchasing/delivery-order/delivery-order-by-supplier-router');
+deliveryOrderBySupplierRouter().applyRoutes(server, 'v1/purchasing/delivery-orders/by-supplier');
+
+//unit receipt note (Bon Terima Unit)		
+var unitReceiptNoteByUserRouter = require('./src/routers/v1/purchasing/unit-receipt-note/unit-receipt-note-by-user-router');
+unitReceiptNoteByUserRouter().applyRoutes(server, '/v1/purchasing/unit-receipt-notes/by-user');
+
+var unitPaymentOrderSupplierRouter = require('./src/routers/v1/purchasing/unit-receipt-note/unit-receipt-note-suplier-unit-router');
+unitPaymentOrderSupplierRouter().applyRoutes(server, '/v1/purchasing/unit-receipt-notes/by-supplier-unit');
+
+//unit payment order (surat perintah bayar)
+var unitPaymentOrderByUserRouter = require('./src/routers/v1/purchasing/unit-payment-order/unit-payment-order-by-user-router');
+unitPaymentOrderByUserRouter().applyRoutes(server, 'v1/purchasing/unit-payment-orders/by-user')
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
