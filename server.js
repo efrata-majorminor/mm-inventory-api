@@ -155,5 +155,8 @@ unitPaymentOrderByUserRouter().applyRoutes(server, 'v1/purchasing/unit-payment-o
 var masterDiscountRouter = require('./src/routers/v1/inventory/master/discount-router');
 masterDiscountRouter().applyRoutes(server, 'v1/inventory/master-discount');
 
+var masterDiscountItemRouter = require('./src/routers/v1/inventory/master/discount-filter-router');
+masterDiscountItemRouter().applyRoutes(server, 'v1/inventory/master-discount/filter')
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
