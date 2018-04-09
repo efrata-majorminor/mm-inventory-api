@@ -149,7 +149,14 @@ unitPaymentOrderSupplierRouter().applyRoutes(server, '/v1/purchasing/unit-receip
 
 //unit payment order (surat perintah bayar)
 var unitPaymentOrderByUserRouter = require('./src/routers/v1/purchasing/unit-payment-order/unit-payment-order-by-user-router');
-unitPaymentOrderByUserRouter().applyRoutes(server, 'v1/purchasing/unit-payment-orders/by-user')
+unitPaymentOrderByUserRouter().applyRoutes(server, 'v1/purchasing/unit-payment-orders/by-user');
+
+//Master Discount
+var masterDiscountRouter = require('./src/routers/v1/inventory/master/discount-router');
+masterDiscountRouter().applyRoutes(server, 'v1/inventory/master-discount');
+
+var masterDiscountItemRouter = require('./src/routers/v1/inventory/master/discount-filter-router');
+masterDiscountItemRouter().applyRoutes(server, 'v1/inventory/master-discount/filter')
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
