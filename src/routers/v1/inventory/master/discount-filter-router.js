@@ -16,27 +16,7 @@ function getRouter() {
 
             manager.getDiscountByFilter(filter)
                 .then(result => {
-                    var data = result.data;
-                    var result = resultFormatter.ok(apiVersion, 200, data);
-                    response.send(200, result);
-                })
-                .catch(e => {
-                    var error = resultFormatter.fail(apiVersion, 400, e);
-                    response.send(400, error);
-                })
-        });
-    });
-
-    router.get('/discount/:discount', passport, (request, response, next) => {
-        db.get().then(db => {
-            var manager = new Manager(db, request.user);
-
-            var discount = parseInt(request.params.discount);
-            var filter = { 'discount': discount };
-
-            manager.getDiscountByFilter(filter)
-                .then(result => {
-                    var data = result.data;
+                    var data = result;
                     var result = resultFormatter.ok(apiVersion, 200, data);
                     response.send(200, result);
                 })
