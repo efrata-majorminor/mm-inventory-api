@@ -12,7 +12,7 @@ function getRouter() {
             var manager = new Manager(db, request.user);
 
             var code = request.params.code;
-            var filter = { 'items.item.code': code, '_deleted' : false };
+            var filter = { 'items.itemsDetails.code': code, '_deleted' : false };
 
             manager.getDiscountByFilter(filter)
                 .then(result => {
