@@ -26,6 +26,35 @@ function getRouter() {
                 })
         });
     });
+
+    router.get('/date/:date', passport, (request, response, next) => {
+        db.get().then(db => {
+            var manager = new Manager(db, request.user);
+
+            var code = request.params.code;
+            var date =  request.params.date;
+
+            var filter = {
+                'startDate': {
+                    $lte: new Date(date)
+                },
+                'endDate': {
+                    $gte: new Date(date)
+                }
+            };
+
+            manager.getDiscountByFilter(filter)
+                .then(result => {
+                    var data = result;
+                    var result = resultFormatter.ok(apiVersion, 200, data);
+                    response.send(200, result);
+                })
+                .catch(e => {
+                    var error = resultFormatter.fail(apiVersion, 400, e);
+                    response.send(400, error);
+                })
+        });
+    });
     return router;
 }
 module.exports = getRouter;
