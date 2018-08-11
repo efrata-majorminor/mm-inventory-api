@@ -61,6 +61,15 @@ inventoryReceiveModuleRouter.applyRoutes(server, "v1/inventory/docs");
 var inventoryDocModuleRouter = require('./src/routers/v1/inventory/inventory-doc-module-router');
 inventoryDocModuleRouter.applyRoutes(server, "v1/inventory/docs");
 
+var v1InventoryDocumentRouter = require('./src/routers/v1/inventory/document-inventory-router');
+v1InventoryDocumentRouter().applyRoutes(server,'/v1/inventory/documents-inventory');
+
+var v1InventorySummaryRouter = require('./src/routers/v1/inventory/summary-inventory-router');
+v1InventorySummaryRouter().applyRoutes(server,'/v1/inventory/summary-inventory'); 
+
+var v1InventoryMovementRouter = require('./src/routers/v1/inventory/movement-inventory-router');
+v1InventoryMovementRouter().applyRoutes(server,'/v1/inventory/movement-inventory');
+
 var packingListreportRouter = require('./src/routers/v1/merchandiser/merchandiser-packing-list-report-router');
 packingListreportRouter.applyRoutes(server, "v1/merchandiser/docs/report");
 
