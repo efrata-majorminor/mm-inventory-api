@@ -158,5 +158,9 @@ masterDiscountRouter().applyRoutes(server, 'v1/inventory/master-discount');
 var masterDiscountItemRouter = require('./src/routers/v1/inventory/master/discount-filter-router');
 masterDiscountItemRouter().applyRoutes(server, 'v1/inventory/master-discount/filter')
 
+// Correction of Purchasing Price
+var correctionOfPurchasingPrice = require('./src/routers/v1/purchasing/correction-price/correction-price-by-user-router');
+correctionOfPurchasingPrice().applyRoutes(server, 'v1/purchasing/corrections/prices/by-user')
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
