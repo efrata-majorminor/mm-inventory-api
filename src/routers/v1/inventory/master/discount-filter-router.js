@@ -40,7 +40,8 @@ function getRouter() {
                 },
                 'endDate': {
                     $gte: new Date(date)
-                }
+                },
+                '_deleted': false
             };
 
             manager.getDiscountByFilter(filter)
