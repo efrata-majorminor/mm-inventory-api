@@ -151,6 +151,9 @@ unitPaymentOrderSupplierRouter().applyRoutes(server, '/v1/purchasing/unit-receip
 var unitPaymentOrderByUserRouter = require('./src/routers/v1/purchasing/unit-payment-order/unit-payment-order-by-user-router');
 unitPaymentOrderByUserRouter().applyRoutes(server, 'v1/purchasing/unit-payment-orders/by-user');
 
+var unitPaymentOrderReadAllRouter = require('./src/routers/v1/purchasing/unit-payment-order/unit-payment-order-read-all-data-router');
+unitPaymentOrderReadAllRouter().applyRoutes(server, 'v1/purchasing/unit-payment-orders/read-all');
+
 //Master Discount
 var masterDiscountRouter = require('./src/routers/v1/inventory/master/discount-router');
 masterDiscountRouter().applyRoutes(server, 'v1/inventory/master-discount');
