@@ -159,11 +159,17 @@ var masterDiscountRouter = require('./src/routers/v1/inventory/master/discount-r
 masterDiscountRouter().applyRoutes(server, 'v1/inventory/master-discount');
 
 var masterDiscountItemRouter = require('./src/routers/v1/inventory/master/discount-filter-router');
-masterDiscountItemRouter().applyRoutes(server, 'v1/inventory/master-discount/filter')
+masterDiscountItemRouter().applyRoutes(server, 'v1/inventory/master-discount/filter');
 
 // Correction of Purchasing Price
-var correctionOfPurchasingPrice = require('./src/routers/v1/purchasing/correction-price/correction-price-by-user-router');
-correctionOfPurchasingPrice().applyRoutes(server, 'v1/purchasing/corrections/prices/by-user')
+var priceCorrectionByUserRouter = require('./src/routers/v1/purchasing/price-correction/price-correction-by-user-router');
+priceCorrectionByUserRouter().applyRoutes(server, 'v1/purchasing/corrections/prices/by-user');
+
+var quantityCorrectionByUserRouter = require('./src/routers/v1/purchasing/quantity-correction/quantity-correction-by-user-router');
+quantityCorrectionByUserRouter().applyRoutes(server, 'v1/purchasing/corrections/quantities/by-user');
+
+var quantityCorrectionReturRouter = require('./src/routers/v1/purchasing/quantity-correction/quantity-correction-retur-router');
+quantityCorrectionReturRouter().applyRoutes(server, 'v1/purchasing/corrections/quantities/retur');
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
