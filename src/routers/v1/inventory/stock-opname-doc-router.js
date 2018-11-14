@@ -89,6 +89,11 @@ router.post('/', passport, (request, response, next) => {
                 })
                 .on('end', function (data) {
                     dataAll = dataCsv;
+
+                    if (dataAll.length > 3000) {
+                        request.setTimeout(240000);
+                    }
+
                     var isTrue = true;
                     for (var a of dataAll) {
                         if (a.length > 3) {
