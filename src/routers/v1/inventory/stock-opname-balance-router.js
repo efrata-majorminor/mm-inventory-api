@@ -4,6 +4,8 @@ var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
+const country = 'id';
+var moment = require('moment');
 
 function getRouter() {
     var router = new Router();
@@ -13,6 +15,23 @@ function getRouter() {
             var code = request.params.code;
 
             manager.getByStorageCode(code)
+                .then(doc => {
+                    
+                    var data = doc.products.map(product => {
+                        var updatedDate = moment(product._updatedDate).locale(country);
+                        var createdDate = moment(product._createdDate).locale(country);
+
+                        if (updatedDate > createdDate) {
+                            product.opnameDate = updatedDate.format('DD/MM/YYYY');
+                        } 
+                        else {
+                            product.opnameDate = createdDate.format('DD/MM/YYYY');
+                        }
+                        return product;
+                    });
+
+                    return Promise.resolve(data);
+                })
                 .then(doc => {
                     var result = resultFormatter.ok(apiVersion, 200, doc);
                     response.send(200, result);
