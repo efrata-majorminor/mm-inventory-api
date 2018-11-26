@@ -30,7 +30,8 @@ function getRouter() {
                         return product;
                     });
 
-                    return Promise.resolve(data);
+                    doc.products = data;
+                    return Promise.resolve(doc);
                 })
                 .then(doc => {
                     var result = resultFormatter.ok(apiVersion, 200, doc);
