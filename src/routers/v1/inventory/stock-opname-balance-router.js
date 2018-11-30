@@ -14,26 +14,9 @@ function getRouter() {
             var manager = new SOBalanceManager(db, request.user);
             var code = request.params.code;
 
-            manager.getByStorageCode(code)
+            manager.getBalanceByStorageCode(code)
                 .then(doc => {
                     
-                    var data = doc.products.map(product => {
-                        var updatedDate = moment(product._updatedDate).locale(country);
-                        var createdDate = moment(product._createdDate).locale(country);
-
-                        if (updatedDate > createdDate) {
-                            product.opnameDate = updatedDate.format('DD/MM/YYYY');
-                        } 
-                        else {
-                            product.opnameDate = createdDate.format('DD/MM/YYYY');
-                        }
-                        return product;
-                    });
-
-                    doc.products = data;
-                    return Promise.resolve(doc);
-                })
-                .then(doc => {
                     var result = resultFormatter.ok(apiVersion, 200, doc);
                     response.send(200, result);
                 })
