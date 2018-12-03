@@ -166,6 +166,7 @@ router.put('/:id', passport, (request, response, next) => {
 
         var id = request.params.id;
         var data = request.body;
+        request.setTimeout(240000);
 
         manager.update(data)
             .then(docId => {
