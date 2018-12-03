@@ -13,6 +13,7 @@ function getRouter() {
         db.get().then(db => {
             var manager = new SOBalanceManager(db, request.user);
             var code = request.params.code;
+            request.setTimeout(240000);
 
             manager.getBalanceByStorageCode(code)
                 .then(doc => {
