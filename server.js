@@ -180,5 +180,8 @@ quantityCorrectionByUserRouter().applyRoutes(server, 'v1/purchasing/corrections/
 var quantityCorrectionReturRouter = require('./src/routers/v1/purchasing/quantity-correction/quantity-correction-retur-router');
 quantityCorrectionReturRouter().applyRoutes(server, 'v1/purchasing/corrections/quantities/retur');
 
+var stockOpnameBalanceRouter = require('./src/routers/v1/inventory/stock-opname-balance-router');
+stockOpnameBalanceRouter().applyRoutes(server, 'v1/inventory/stock-opname-balance')
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
