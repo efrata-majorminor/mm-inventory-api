@@ -111,6 +111,49 @@ router.get('/:module/NotReceived', passport, (request, response, next) => {
     })
 });
 
+router.get('/:module/packingRTT', passport, (request, response, next) => {
+    db.get().then(db => {
+        var module = request.params.module;
+        var Manager = map.get(module);
+        var manager = new Manager(db, request.user);
+        if (module === "efr-kb-rtt") {
+        }
+        var query = request.queryInfo;
+        var sorting = {
+            "_createdDate": -1
+        };
+        //var moduleId = "EFR-KB/PLB";
+        var moduleId = "EFR-KB/RTT";
+        var filter = {
+            _deleted: false,
+         //   "isReceived": false,
+            //"source.code":"GDG.01",
+            //"packingList": {
+                "reference": {
+                '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
+            }
+        };
+        query.filter = filter;
+        query.order = sorting;
+        query.select = [
+            "code", "packingList", "password", "source.code", "source.name", "destination.code", "destination.name", "reference", "_createdDate", "isReceived", "isDraft"    
+           // "code", "packingList", "password", "source.code", "source.name", "destination.code", "destination.name", "date", "isReceived", "isDraft"
+        ];
+
+       manager.readNotReceived(query)
+            .then(docs => {
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
+                delete docs.data;
+                result.info = docs;
+                response.send(200, result);
+            })
+            .catch(e => {
+                var error = resultFormatter.fail(apiVersion, 400, e);
+                response.send(400, error);
+            })
+    })
+});
+
 router.put('/:module/:id', passport, (request, response, next) => {
     db.get().then(db => {
         var module = request.params.module;
