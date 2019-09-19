@@ -1,4 +1,4 @@
-var Manager = require("bateeq-module").inventory.DocumentInventoryManager;
+var Manager = require("mm-module").inventory.DocumentInventoryManager;
 var JwtRouterFactory = require("../jwt-router-factory");
 const apiVersion = '1.0.0';
 

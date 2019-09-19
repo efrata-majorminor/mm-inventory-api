@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;
 var db = require("../../../../db");
-var PurchaseOrderManager = require("bateeq-module").purchasing.PurchasingOrderManager;
+var PurchaseOrderManager = require("mm-module").purchasing.PurchasingOrderManager;
 var resultFormatter = require("../../../../result-formatter");
 
 var passport = require('../../../../passports/jwt-passport');

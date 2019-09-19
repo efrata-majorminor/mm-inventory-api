@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;
 var router = new Router();
-var map = require('bateeq-module').inventory.map;
+var map = require('mm-module').inventory.map;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var ObjectId = require('mongodb').ObjectId;
@@ -24,7 +24,7 @@ router.get('/', passport, (request, response, next) => {
                 $lte: new Date(dateto)
             },
              "code": {
-                        '$regex': new RegExp("^[A-Z0-9]+\/EFR-KB/RTT\/[0-9]{2}\/[0-9]{4}$", "i")
+                        '$regex': new RegExp("^[A-Z0-9]+\/MM-KB/RTT\/[0-9]{2}\/[0-9]{4}$", "i")
                     }
         };  
         query.filter = {

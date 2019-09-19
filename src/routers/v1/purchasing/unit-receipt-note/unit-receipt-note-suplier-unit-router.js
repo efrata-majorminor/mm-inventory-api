@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;
 var db = require("../../../../db");
-var UnitReceiptNoteManager = require("bateeq-module").purchasing.UnitReceiptNoteManager;
+var UnitReceiptNoteManager = require("mm-module").purchasing.UnitReceiptNoteManager;
 var resultFormatter = require("../../../../result-formatter");
 var ObjectId = require("mongodb").ObjectId;
 var passport = require('../../../../passports/jwt-passport');

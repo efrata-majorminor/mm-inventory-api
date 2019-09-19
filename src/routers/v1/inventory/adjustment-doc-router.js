@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var AdjustmentStockManager = require('bateeq-module').inventory.AdjustmentStockManager;
+var AdjustmentStockManager = require('mm-module').inventory.AdjustmentStockManager;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');

@@ -1,5 +1,5 @@
 const apiVersion = '1.0.0';
-var Manager = require("bateeq-module").purchasing.PurchasingOrderExternalManager;
+var Manager = require("mm-module").purchasing.PurchasingOrderExternalManager;
 var resultFormatter = require("../../../../result-formatter");
 var db = require("../../../../db");
 
