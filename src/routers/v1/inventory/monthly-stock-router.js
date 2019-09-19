@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var MonthlyStockManager = require('bateeq-module').inventory.MonthlyStockManager;
+var MonthlyStockManager = require('mm-module').inventory.MonthlyStockManager;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');
@@ -18,8 +18,35 @@ router.get('/:storageCode/:month/:year', passport, (request, response, next) => 
 
         manager.getStockInStorage(storageCode, month, year)
             .then(docs => {
-                var result = resultFormatter.ok(apiVersion, 200, docs);
-                response.send(200, result);
+                if ((request.headers.accept || '').toString().indexOf("application/xls") < 0) {
+                    var data = docs;
+                    var result = resultFormatter.ok(apiVersion, 200, data);
+                    response.send(200, result);
+                } else {
+                    var data = [];
+                    for (const doc of docs) {
+                        const _data = {
+                            "Kode Toko": storageCode,
+                            "Nama": doc.storageName,
+                            "Barcode": doc.itemCode,
+                            "Nama Barang": doc.itemName,
+                            "Kuantitas": doc.quantity,
+                            "Total HPP": doc.totalHPP,
+                            "Total Harga Jual": doc.totalSale
+                        }
+                        data.push(_data);
+                    }
+                    var options = {
+                        "Kode Toko": "string",
+                        "Nama": "string",
+                        "Barcode": "string",
+                        "Nama Barang": "string",
+                        "Kuantitas": "number",
+                        "Total HPP": "number",
+                        "Total Harga Jual": "number"
+                    };
+                    response.xls(`Report Monthly Stock.xlsx`, data, options);
+                }
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);

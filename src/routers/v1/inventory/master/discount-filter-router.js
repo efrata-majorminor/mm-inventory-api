@@ -3,7 +3,7 @@ var db = require('../../../../db');
 var Router = require('restify-router').Router;
 var resultFormatter = require("../../../../result-formatter");
 var passport = require('../../../../passports/jwt-passport');
-var Manager = require("bateeq-module").inventory.master.DiscountManager;
+var Manager = require("mm-module").inventory.master.DiscountManager;
 
 function getRouter() {
     var router = new Router();

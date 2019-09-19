@@ -1,5 +1,5 @@
 const apiVersion = '1.0.0';
-var Manager = require("bateeq-module").purchasing.UnitPaymentOrderManager;
+var Manager = require("mm-module").purchasing.UnitPaymentOrderManager;
 var resultFormatter = require("../../../../result-formatter");
 var db = require("../../../../db");
 var JwtRouterFactory = require("../../jwt-router-factory");
