@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;
 var router = new Router();
-var map = require('bateeq-module').inventory.map;
+var map = require('mm-module').inventory.map;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var ObjectId = require('mongodb').ObjectId;
@@ -81,7 +81,7 @@ router.get('/export/:storageId/:dateFrom/:dateTo/:transaction/:packingListStatus
                         "Sumber Penyimpanan": packinglist.source.name || "",
                         "Tujuan Penyimpanan": packinglist.destination.name || "",
                         "Packing List": packinglist.packingList,
-                        "Transaksi": (packinglist.packingList.indexOf("EFR-KB/PLB") != -1 ? "Pengiriman Barang Baru" : "Pengiriman Barang Retur"),
+                        "Transaksi": (packinglist.packingList.indexOf("MM-KB/PLB") != -1 ? "Pengiriman Barang Baru" : "Pengiriman Barang Retur"),
                         "Status": (packinglist.isReceived ? "Sudah Diterima" : "Belum Diterima"),
                         "Total Kuantitas Barang": sendQuantity,
                         "Total harga Jual": price

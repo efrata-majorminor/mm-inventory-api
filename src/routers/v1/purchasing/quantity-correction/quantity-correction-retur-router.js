@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;
 var db = require("../../../../db");
-var UnitPaymentQuantityCorrectionNoteManager = require("bateeq-module").purchasing.UnitPaymentQuantityCorrectionNoteManager;
+var UnitPaymentQuantityCorrectionNoteManager = require("mm-module").purchasing.UnitPaymentQuantityCorrectionNoteManager;
 var resultFormatter = require("../../../../result-formatter");
 const apiVersion = '1.0.0';
 var passport = require('../../../../passports/jwt-passport');

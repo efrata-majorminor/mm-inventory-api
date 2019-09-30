@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var map = require('bateeq-module').inventory.map;
+var map = require('mm-module').inventory.map;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');
@@ -25,7 +25,8 @@ router.get('/:module', passport, (request, response, next) => {
 
         var query = request.query;
         if (module === "efr-tb-bbt") {
-            var moduleId = "EFR-TB/BBT";
+            //var moduleId = "EFR-TB/BBT";
+            var moduleId = "MM-TB/BBT";
             filter = {
                 "code": {
                     '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
@@ -38,7 +39,8 @@ router.get('/:module', passport, (request, response, next) => {
         }
 
         if (module === "efr-tb-bbp") {
-            var moduleId = "EFR-TB/BBP";
+            //var moduleId = "EFR-TB/BBP";
+            var moduleId = "MM-TB/BBP";
             filter = {
                 "code": {
                     '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
@@ -51,7 +53,8 @@ router.get('/:module', passport, (request, response, next) => {
         }
 
         if (module === "efr-tb-bat") {
-            var moduleId = "EFR-TB/BAT";
+            //var moduleId = "EFR-TB/BAT";
+            var moduleId = "MM-TB/BAT";
             filter = {
                 "code": {
                     '$regex': new RegExp("^[A-Z0-9]+\/" + moduleId + "\/[0-9]{2}\/[0-9]{4}$", "i")
@@ -64,7 +67,8 @@ router.get('/:module', passport, (request, response, next) => {
         }
 
         if (module === "efr-kb-rtp") {
-            var moduleId = "EFR-KB/RTP";
+            //var moduleId = "EFR-KB/RTP";
+            var moduleId = "MM-KB/RTP";
             var regexModuleId = new RegExp(moduleId, "i");
             filter = {
                 "code": {
@@ -77,7 +81,8 @@ router.get('/:module', passport, (request, response, next) => {
             };
         }
         if (module === "efr-kb-rtt") {
-            var moduleId = "EFR-KB/RTT";
+            //var moduleId = "EFR-KB/RTT";
+            var moduleId = "MM-KB/RTT";
             var regexModuleId = new RegExp(moduleId, "i");
             filter = {
                 "code": {
@@ -91,7 +96,8 @@ router.get('/:module', passport, (request, response, next) => {
         }
 
         if (module === "efr-kb-rtu") {
-            var moduleId = "EFR-KB/RTU";
+            //var moduleId = "EFR-KB/RTU";
+            var moduleId = "MM-KB/RTU";
             var regexModuleId = new RegExp(moduleId, "i");
             filter = {
                 "code": {
@@ -105,7 +111,8 @@ router.get('/:module', passport, (request, response, next) => {
         }
 
         if (module === "efr-kb-exp") {
-            var moduleId = "EFR-KB/EXP";
+            //var moduleId = "EFR-KB/EXP";
+            var moduleId = "MM-KB/EXP";
             var regexModuleId = new RegExp(moduleId, "i");
             filter = {
                 "code": {

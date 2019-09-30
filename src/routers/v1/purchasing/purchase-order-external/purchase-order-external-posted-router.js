@@ -1,13 +1,13 @@
 var Router = require('restify-router').Router;
 var db = require("../../../../db");
-var PurchaseOrderExternalManager = require("bateeq-module").purchasing.PurchasingOrderExternalManager;
+var PurchaseOrderExternalManager = require("mm-module").purchasing.PurchasingOrderExternalManager;
 var resultFormatter = require("../../../../result-formatter");
 var passport = require('../../../../passports/jwt-passport');
 const apiVersion = '1.0.0';
 var ObjectId = require("mongodb").ObjectId;
 
-var BateeqModels = require('bateeq-models');
-var poStatusEnum = BateeqModels.purchasing.enum.PurchaseOrderStatus;
+var MMModels = require('mm-models');
+var poStatusEnum = MMModels.purchasing.enum.PurchaseOrderStatus;
 
 function getRouter() {
     var router = new Router();
