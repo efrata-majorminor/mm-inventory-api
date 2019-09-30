@@ -2,7 +2,7 @@ const apiVersion = '1.0.0';
 var db = require('../../../../db');
 var resultFormatter = require("../../../../result-formatter");
 var passport = require('../../../../passports/jwt-passport');
-var Manager = require("bateeq-module").inventory.master.DiscountManager;
+var Manager = require("mm-module").inventory.master.DiscountManager;
 
 var JwtRouterFactory = require("../../jwt-router-factory");
 

@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var TransferInDocManager = require('bateeq-module').inventory.TransferInDocManager;
+var TransferInDocManager = require('mm-module').inventory.TransferInDocManager;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');

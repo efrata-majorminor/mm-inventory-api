@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var map = require('bateeq-module').merchandiser.map;
+var map = require('mm-module').merchandiser.map;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');
@@ -83,7 +83,7 @@ router.get('/:module/NotReceived', passport, (request, response, next) => {
         var sorting = {
             "_createdDate": -1
         };
-        var moduleId = "EFR-KB/PLB";
+        var moduleId = "MM-KB/PLB";
         var filter = {
             _deleted: false,
             "isReceived": false,
@@ -123,10 +123,10 @@ router.get('/:module/packingRTT', passport, (request, response, next) => {
             "_createdDate": -1
         };
         //var moduleId = "EFR-KB/PLB";
-        var moduleId = "EFR-KB/RTT";
+        var moduleId = "MM-KB/RTT";
         var filter = {
             _deleted: false,
-         //   "isReceived": false,
+            //"isReceived": false,
             //"source.code":"GDG.01",
             //"packingList": {
                 "reference": {

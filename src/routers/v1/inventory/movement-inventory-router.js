@@ -1,4 +1,4 @@
-var Manager = require("bateeq-module").inventory.MovementInventoryManager;
+var Manager = require("mm-module").inventory.MovementInventoryManager;
 var JwtRouterFactory = require("../jwt-router-factory");
 var Router = require("restify-router").Router;
 var db = require("../../../db");

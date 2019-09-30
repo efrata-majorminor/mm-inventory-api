@@ -1,5 +1,5 @@
 var Router = require('restify-router').Router;;
-var SOBalanceManager = require('bateeq-module').inventory.StockOpnameBalanceManager;
+var SOBalanceManager = require('mm-module').inventory.StockOpnameBalanceManager;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 var passport = require('../../../passports/jwt-passport');

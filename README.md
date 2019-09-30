@@ -1,2 +1,2 @@
-# bateeq-inventory-api
-Bateeq RESTful inventory api
+# mm-inventory-api
+Major Minor RESTful inventory api
